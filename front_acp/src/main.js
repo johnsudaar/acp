@@ -39,9 +39,11 @@ Vue.component('network-remove-device', NetworkRemoveDevice)
 import NetworkFormAtem from './components/Network/forms/Atem.vue'
 import NetworkFormJVCHM660 from './components/Network/forms/JVCHM660.vue'
 import NetworkFormTallyRasp from './components/Network/forms/TallyRasp.vue'
+import NetworkFormTallyRecorder from './components/Network/forms/TallyRecorder.vue'
 Vue.component('network-form-atem', NetworkFormAtem)
 Vue.component('network-form-jvc-hm-660', NetworkFormJVCHM660)
 Vue.component('network-form-tally-rasp', NetworkFormTallyRasp)
+Vue.component('network-form-tally-rec', NetworkFormTallyRecorder)
 
 // Config
 import ServerConfig from './components/Config/Server.vue'

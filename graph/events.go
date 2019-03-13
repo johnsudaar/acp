@@ -39,7 +39,6 @@ func (d deviceGraph) SendEvent(ctx context.Context, from models.Port, name strin
 }
 
 func (d deviceGraph) Connect(ctx context.Context, input models.Port, output models.Port) error {
-	log := logger.Get(ctx)
 	inDevice, err := d.Get(ctx, input.DeviceID)
 	if err != nil {
 		return errors.Wrap(err, "fail to find input device")
@@ -60,7 +59,6 @@ func (d deviceGraph) Connect(ctx context.Context, input models.Port, output mode
 
 	d.linksLock.Lock()
 	defer d.linksLock.Unlock()
-	log.Info(input)
 	d.links[input] = append(d.links[input], output)
 	return nil
 }

@@ -6,7 +6,7 @@ export default {
       case 'JVC_HM_660':
         return "videocam"
       default:
-        return "setting"
+        return "settings"
     }
   }
 }

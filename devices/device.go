@@ -2,6 +2,7 @@ package devices
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/johnsudaar/acp/models"
 	"gopkg.in/mgo.v2/bson"
@@ -25,6 +26,7 @@ type Device interface {
 	State() State
 	InputPorts() []string
 	OutputPorts() []string
+	API() http.Handler
 
 	Start() error
 	Stop() error

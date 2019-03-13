@@ -186,7 +186,7 @@ export class Paper {
     })
 
     this._graph.on('remove', (cell) => {
-      if(cell.isLink()) {
+      if(cell.isLink() && cell.attributes.attrs) {
         let id = cell.attributes.attrs.acp_id;
         if(id === undefined) {
           return

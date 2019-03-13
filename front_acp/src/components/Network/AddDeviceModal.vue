@@ -67,7 +67,7 @@ export default {
       this.invalidForm = !valid;
     },
     async submit() {
-      this.loading = true
+    this.loading = true
       this.error = null
       // Submit our part of the form
       let valid = await this.$validator.validateAll()

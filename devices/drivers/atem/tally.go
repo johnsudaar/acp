@@ -12,6 +12,9 @@ import (
 func (a *ATEM) WriteTally(tallies atem.TallyStatuses) {
 	log := a.log
 	ctx := logger.ToCtx(context.Background(), log)
+	var program []string
+	var preview []string
+
 	for _, tally := range tallies {
 		log.WithFields(logrus.Fields{
 			"port":    tally.Source.String(),
@@ -23,5 +26,16 @@ func (a *ATEM) WriteTally(tallies atem.TallyStatuses) {
 			Program: tally.Program,
 			Preview: tally.Preview,
 		})
+		if tally.Program {
+			program = append(program, tally.Source.String())
+		}
+		if tally.Preview {
+			preview = append(preview, tally.Source.String())
+		}
 	}
+
+	a.SendEvent(ctx, "Tally", events.TalliesEventName, events.TalliesEvent{
+		Program: program,
+		Preview: preview,
+	})
 }

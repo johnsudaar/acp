@@ -10,6 +10,7 @@ import (
 	muxhandlers "github.com/gorilla/handlers"
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/graph"
+	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
 )
 
@@ -27,6 +28,7 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	router.HandleFunc("/api/devices/{id}", deviceController.Show).Methods("GET")
 	router.HandleFunc("/api/devices/{id}", deviceController.Destroy).Methods("DELETE")
 	router.HandleFunc("/api/devices/{id}", deviceController.Update).Methods("PATCH", "PUT")
+	router.HandleFunc("/api/devices/{id}/{_dummy:.*}", deviceController.APICall)
 	router.HandleFunc("/api/device_types", deviceController.ListTypes).Methods("GET")
 	router.HandleFunc("/api/links", linkController.List).Methods("GET")
 	router.HandleFunc("/api/links", linkController.Create).Methods("POST")
@@ -45,7 +47,7 @@ func Start(ctx context.Context, graph graph.Graph) error {
 }
 
 func Ping(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
-	JSON(req.Context(), resp, map[string]string{
+	utils.JSON(req.Context(), resp, map[string]string{
 		"response": "pong",
 	})
 

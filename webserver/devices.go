@@ -3,6 +3,7 @@ package webserver
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/Scalingo/go-utils/logger"
@@ -10,6 +11,7 @@ import (
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/graph"
 	"github.com/johnsudaar/acp/models"
+	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2/bson"
@@ -56,7 +58,7 @@ func (c DeviceController) List(resp http.ResponseWriter, req *http.Request, para
 		devices = append(devices, deviceToDeviceResponse(device))
 	}
 
-	JSON(ctx, resp, devices)
+	utils.JSON(ctx, resp, devices)
 	return nil
 }
 
@@ -64,7 +66,7 @@ func (c DeviceController) List(resp http.ResponseWriter, req *http.Request, para
 func (c DeviceController) Show(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
 	ctx := req.Context()
 	if !bson.IsObjectIdHex(params["id"]) {
-		Err(ctx, resp, http.StatusNotFound, "not found")
+		utils.Err(ctx, resp, http.StatusNotFound, "not found")
 		return nil
 	}
 	id := bson.ObjectIdHex(params["id"])
@@ -79,7 +81,7 @@ func (c DeviceController) Show(resp http.ResponseWriter, req *http.Request, para
 	if err != nil { // The device graph failed to find the device
 		// If the device graph does not exist in the device graph
 		if err == graph.ErrNotFound {
-			Err(ctx, resp, http.StatusNotFound, "not found")
+			utils.Err(ctx, resp, http.StatusNotFound, "not found")
 			return nil
 		} else {
 			// It's another error => 500
@@ -95,7 +97,7 @@ func (c DeviceController) Show(resp http.ResponseWriter, req *http.Request, para
 		DisplayOpts:    dev.DisplayOpts,
 	}
 
-	JSON(ctx, resp, deviceResp)
+	utils.JSON(ctx, resp, deviceResp)
 	return nil
 }
 
@@ -109,7 +111,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	err := json.NewDecoder(req.Body).Decode(&device)
 	if err != nil {
 		// If it fails, the json is invalid
-		Err(ctx, resp, http.StatusBadRequest, err.Error())
+		utils.Err(ctx, resp, http.StatusBadRequest, err.Error())
 		log.WithError(err).Error("Invalid body")
 		return nil
 	}
@@ -125,7 +127,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	if err != nil { // if there was an error while finding the device type
 		if err == devices.ErrTypeNotFound {
 			// If the device was not found => Invalid request
-			Err(ctx, resp, http.StatusBadRequest, "invalid device type")
+			utils.Err(ctx, resp, http.StatusBadRequest, "invalid device type")
 			log.WithError(err).Error("Invalid device type")
 			return nil
 		} else {
@@ -140,7 +142,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	err = loader.Validate(device.Params)
 	if err != nil {
 		// If the validation did not pass => Invalid request (the specialization body is invalid)
-		Err(ctx, resp, http.StatusBadRequest, err.Error())
+		utils.Err(ctx, resp, http.StatusBadRequest, err.Error())
 		return nil
 	}
 
@@ -165,7 +167,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 		OutputPorts:    dev.OutputPorts(),
 		DisplayOpts:    device.DisplayOpts,
 	}
-	JSON(ctx, resp, deviceResp)
+	utils.JSON(ctx, resp, deviceResp)
 
 	return nil
 }
@@ -173,7 +175,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 func (c DeviceController) Update(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
 	ctx := req.Context()
 	if !bson.IsObjectIdHex(params["id"]) {
-		Err(ctx, resp, http.StatusNotFound, "not found")
+		utils.Err(ctx, resp, http.StatusNotFound, "not found")
 		return nil
 	}
 	id := bson.ObjectIdHex(params["id"])
@@ -186,7 +188,7 @@ func (c DeviceController) Update(resp http.ResponseWriter, req *http.Request, pa
 	var opts DeviceUpdateParams
 	err = json.NewDecoder(req.Body).Decode(&opts)
 	if err != nil {
-		Err(ctx, resp, http.StatusNotFound, err.Error())
+		utils.Err(ctx, resp, http.StatusNotFound, err.Error())
 		return nil
 	}
 
@@ -205,7 +207,7 @@ func (c DeviceController) Update(resp http.ResponseWriter, req *http.Request, pa
 func (c DeviceController) Destroy(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
 	ctx := req.Context()
 	if !bson.IsObjectIdHex(params["id"]) {
-		Err(ctx, resp, http.StatusNotFound, "not found")
+		utils.Err(ctx, resp, http.StatusNotFound, "not found")
 		return nil
 	}
 	id := bson.ObjectIdHex(params["id"])
@@ -233,7 +235,38 @@ func (DeviceController) ListTypes(resp http.ResponseWriter, req *http.Request, p
 
 	types := devices.AvailableTypes()
 
-	JSON(ctx, resp, types)
+	utils.JSON(ctx, resp, types)
+	return nil
+}
+
+func (c DeviceController) APICall(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
+	ctx := req.Context()
+	if !bson.IsObjectIdHex(params["id"]) {
+		utils.Err(ctx, resp, http.StatusNotFound, "not found")
+		return nil
+	}
+	id := bson.ObjectIdHex(params["id"])
+	var dev models.Device
+	err := document.Find(ctx, models.DeviceCollection, id, &dev)
+	if err != nil {
+		return errors.Wrap(err, "fail to find device")
+	}
+
+	// Fetch the device in the device graph
+	device, err := c.graph.Get(ctx, params["id"])
+	if err != nil { // The device graph failed to find the device
+		// If the device graph does not exist in the device graph
+		if err == graph.ErrNotFound {
+			utils.Err(ctx, resp, http.StatusNotFound, "not found")
+			return nil
+		} else {
+			// It's another error => 500
+			return errors.Wrap(err, "fail to find device")
+		}
+	}
+
+	prefix := fmt.Sprintf("/api/devices/%s", params["id"])
+	http.StripPrefix(prefix, device.API()).ServeHTTP(resp, req)
 	return nil
 }
 
