@@ -1,25 +1,45 @@
 package main
 
 import (
-	"net/http"
+	"context"
 
-	handlers "github.com/Scalingo/go-handlers"
 	"github.com/Scalingo/go-utils/logger"
+
+	"github.com/johnsudaar/acp/config"
+	"github.com/johnsudaar/acp/devices/drivers"
 	"github.com/johnsudaar/acp/graph"
 	"github.com/johnsudaar/acp/webserver"
+	"github.com/pkg/errors"
 )
 
 func main() {
+	// ------------ Initialization -------------------
+	// Load App config
+	err := config.Init()
+	if err != nil {
+		panic(errors.Wrap(err, "fail to init config"))
+	}
+	// Logger init
 	log := logger.Default()
-	graph, err := graph.Load("./resources/network.json")
+	ctx := logger.ToCtx(context.Background(), log)
+	log.Info("Config initialized")
+	// Load devices drivers
+	drivers.LoadDrivers()
+	log.Info("Drivers initialized")
+
+	// Load current graph
+	graph, err := graph.Load(ctx)
 	if err != nil {
 		panic(err)
 	}
+	log.Info("Graph loaded")
 
-	router := handlers.NewRouter(log)
-	router.HandleFunc("/api/graph", webserver.GraphController{Graph: graph}.Show).Methods("GET")
-	router.HandleFunc("/api/devices/{id}", webserver.DeviceController{Graph: graph}.Show).Methods("GET")
+	log.Info("Init phase done.")
 
-	http.ListenAndServe(":8080", router)
-
+	log.Info("Starting services")
+	// ------------ Start ----------------------------
+	err = webserver.Start(ctx, graph)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -2,76 +2,53 @@
   "devices": [
     {
       "device": "JVC_HM_660",
-      "id": "Cam1",
-      "attributes": {
-        "name": "Camera 1",
-        "ip": "192.168.1.201",
-        "port":"80",
-        "user": "username",
-        "password": "password"
-      }
-    },
-    {
-      "device": "JVC_HM_660",
       "id": "Cam2",
       "attributes": {
         "name": "Camera 2",
-        "ip": "192.168.1.202",
+        "ip": "192.168.20.111",
         "port":"80",
-        "user": "username",
-        "password": "password"
+        "user": "prohd",
+        "password": "0000"
       }
-    },
-    {
+    }, {
       "device": "JVC_HM_660",
       "id": "Cam3",
       "attributes": {
         "name": "Camera 3",
-        "ip": "192.168.1.203",
+        "ip": "192.168.20.103",
         "port":"80",
-        "user": "username",
-        "password": "password"
+        "user": "prohd",
+        "password": "0000"
       }
-    },
-    {
+    }, {
       "device": "JVC_HM_660",
       "id": "Cam4",
       "attributes": {
         "name": "Camera 4",
-        "ip": "192.168.1.204",
+        "ip": "192.168.20.104",
         "port":"80",
-        "user": "username",
-        "password": "password"
+        "user": "prohd",
+        "password": "0000"
       }
-    },
-    {
+    }, {
       "device": "ATEM",
       "id": "ATEM1",
       "attributes": {
-        "ip": "192.168.1.11",
+        "ip": "192.168.20.240",
         "port": "9910",
-        "my_port": "1010"
+        "my_port": "9920"
       }
     }
   ],
   "links": [
     {
       "from": {
-        "id": "Cam1",
-        "port": "VideoOut"
-      },
-      "to": {
-        "id": "ATEM1",
-        "port": "Input1"
-      }
-    }, {
-      "from": {
         "id": "Cam2",
         "port": "VideoOut"
       },
       "to": {
         "id": "ATEM1",
-        "port": "Input2"
+        "port": "Input_2"
       }
     }, {
       "from": {
@@ -80,7 +57,7 @@
       },
       "to": {
         "id": "ATEM1",
-        "port": "Input3"
+        "port": "Input_3"
       }
     }, {
       "from": {
@@ -89,7 +66,7 @@
       },
       "to": {
         "id": "ATEM1",
-        "port": "Input4"
+        "port": "Input_4"
       }
     }
   ]

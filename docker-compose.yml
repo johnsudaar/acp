@@ -1,0 +1,22 @@
+version: '2'
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/go/src/github.com/johnsudaar/acp
+    environment:
+      MONGO_URL: "mongodb://mongo:27017/acp"
+      PORT: 8081
+    ports:
+      - 8081:8081
+    links:
+      - mongo
+    command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp'
+  mongo:
+    image: mongo
+    volumes:
+      - ./docker/data:/data/db
+        #    ports:
+      #   - 27017:27017
+
+

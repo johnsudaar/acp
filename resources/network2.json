@@ -1,0 +1,96 @@
+{
+  "devices": [
+    {
+      "device": "JVC_HM_660",
+      "id": "Cam1",
+      "attributes": {
+        "name": "Camera 1",
+        "ip": "192.168.1.201",
+        "port":"80",
+        "user": "prohd",
+        "password": "0000"
+      }
+    },
+    {
+      "device": "JVC_HM_660",
+      "id": "Cam2",
+      "attributes": {
+        "name": "Camera 2",
+        "ip": "192.168.1.202",
+        "port":"80",
+        "user": "prohd",
+        "password": "OOOO"
+      }
+    },
+    {
+      "device": "JVC_HM_660",
+      "id": "Cam3",
+      "attributes": {
+        "name": "Camera 3",
+        "ip": "192.168.1.203",
+        "port":"80",
+        "user": "prohd",
+        "password": "0000"
+      }
+    },
+    {
+      "device": "JVC_HM_660",
+      "id": "Cam4",
+      "attributes": {
+        "name": "Camera 4",
+        "ip": "192.168.1.204",
+        "port":"80",
+        "user": "prohd",
+        "password": "0000"
+      }
+    },
+    {
+      "device": "ATEM",
+      "id": "ATEM1",
+      "attributes": {
+        "ip": "192.168.1.11",
+        "port": "9910",
+        "my_port": "9920"
+      }
+    }
+  ],
+  "links": [
+    {
+      "from": {
+        "id": "Cam1",
+        "port": "VideoOut"
+      },
+      "to": {
+        "id": "ATEM1",
+        "port": "Input1"
+      }
+    }, {
+      "from": {
+        "id": "Cam2",
+        "port": "VideoOut"
+      },
+      "to": {
+        "id": "ATEM1",
+        "port": "Input2"
+      }
+    }, {
+      "from": {
+        "id": "Cam3",
+        "port": "VideoOut"
+      },
+      "to": {
+        "id": "ATEM1",
+        "port": "Input3"
+      }
+    }, {
+      "from": {
+        "id": "Cam4",
+        "port": "VideoOut"
+      },
+      "to": {
+        "id": "ATEM1",
+        "port": "Input4"
+      }
+    }
+  ]
+}
