@@ -12,9 +12,8 @@ import (
 
 type ATEM struct {
 	*devices.Base
-	IP     string
-	Port   string
-	MyPort string
+	IP   string
+	Port string
 
 	log          logrus.FieldLogger
 	stoppingLock *sync.Mutex
@@ -37,7 +36,6 @@ func (a *ATEM) connect() {
 	a.log.Info("Trying to connect")
 	client, err := atem.New(
 		net.JoinHostPort(a.IP, a.Port),
-		a.MyPort,
 		atem.WithTallyWriter(a),
 	)
 	if err != nil {

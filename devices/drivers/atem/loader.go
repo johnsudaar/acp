@@ -13,9 +13,8 @@ import (
 )
 
 type AtemParams struct {
-	IP     string `json:"ip"`      // ATEM IP
-	Port   int    `json:"port"`    // ATEM Port
-	MyPort int    `json:"my_port"` // Local port used for the UDP connection to the ATEM
+	IP   string `json:"ip"`   // ATEM IP
+	Port int    `json:"port"` // ATEM Port
 }
 
 type atemLoader struct{}
@@ -33,7 +32,6 @@ func (atemLoader) Load(ctx context.Context, base *devices.Base, message json.Raw
 	var atem ATEM
 	atem.IP = params.IP
 	atem.Port = strconv.Itoa(params.Port)
-	atem.MyPort = strconv.Itoa(params.MyPort)
 	atem.Base = base
 	atem.stoppingLock = &sync.Mutex{}
 
