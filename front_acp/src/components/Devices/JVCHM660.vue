@@ -32,3 +32,7 @@
     </v-layout>
   </v-layout>
 </template>
+
+<script>
+
+</script>

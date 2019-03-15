@@ -59,9 +59,9 @@ p {
         <v-spacer/>
           <p class="mr-2"> IP: {{device.ip}}</p>
           <p class="mr-2"> Port: {{device.port}}</p>
-          <p> Status: Connected</p>
+          <p> Status: {{device.state}}</p>
       </v-toolbar>
-      <component :is="deviceComponent"></component>
+      <component :is="deviceComponent" :device-id="device.id"></component>
     </v-layout>
     <loading v-else/>
   </v-layout>

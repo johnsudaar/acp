@@ -14,6 +14,7 @@ export default {
   },
   methods: {
     startClock() {
+      clearInterval(this.intervalID)
       this.intervalID = setInterval(()=>{
         this.curTime = format(
           new Date(),

@@ -1,5 +1,14 @@
 package client
 
+import (
+	"encoding/json"
+	"strconv"
+	"time"
+
+	"github.com/pkg/errors"
+	errgo "gopkg.in/errgo.v1"
+)
+
 type AEStatus string
 type CamStatus string
 type ExposureStatus string
@@ -140,6 +149,15 @@ type CameraDetailedStatus struct {
 	MenuStatus        Status      `json:"MenuStatus"`
 }
 
+func (c CameraDetailedStatus) TCTime() (time.Duration, error) {
+	seconds, err := strconv.Atoi(c.Timecode)
+	if err != nil {
+		return 0, errgo.Notef(err, "invalid timecode")
+	}
+
+	return time.Duration(seconds) * time.Second, nil
+}
+
 type IrisDetailedStatus struct {
 	Status IrisStatus `json:"Status"`
 	Value  string     `json:"Value"`
@@ -200,4 +218,19 @@ type SlotDetailedStatus struct {
 	Remain        string        `json:"Remain"`
 	ClipNum       int           `json:"ClipNum"`
 	RemainWarning int           `json:"RemainWarning"`
+}
+
+func (c HTTPClient) GetCamStatus() (CameraStatus, error) {
+	var camStatus CameraStatus
+	resp, err := c.makeRequest("GetCamStatus", nil)
+	if err != nil {
+		return camStatus, errors.Wrap(err, "fail to call HTTP API")
+	}
+
+	err = json.Unmarshal(resp.Data, &camStatus)
+	if err != nil {
+		return camStatus, errors.Wrap(err, "invalid response")
+	}
+
+	return camStatus, nil
 }

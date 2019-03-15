@@ -53,11 +53,17 @@ Vue.component('config-server', ServerConfig)
 import AtemBtnGrp from './components/Atem/ButtonGroup.vue'
 Vue.component('atem-btn-grp', AtemBtnGrp)
 
+// Recording
+import RecStatus from './components/Rec/Status.vue'
+Vue.component('rec-status', RecStatus)
+
 // Devices
 import DeviceAtem from './components/Devices/Atem.vue'
 import DeviceJVCHM660 from './components/Devices/JVCHM660.vue'
+import DeviceTallyRecorder from './components/Devices/TallyRecorder.vue'
 Vue.component('device-atem', DeviceAtem)
 Vue.component('device-jvc-hm-660', DeviceJVCHM660)
+Vue.component('device-tally-rec', DeviceTallyRecorder)
 
 
 // Form validation
