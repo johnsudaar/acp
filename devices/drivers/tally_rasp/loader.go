@@ -7,11 +7,13 @@ import (
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/params"
 	"github.com/pkg/errors"
 )
 
 type TallyParams struct {
-	IP string `json:"ip"`
+	IP         string `json:"ip"`
+	PortsCount int    `json:"port_count"`
 }
 
 type raspTallyLoader struct{}
@@ -44,4 +46,20 @@ func (raspTallyLoader) Validate(message json.RawMessage) error {
 	}
 
 	return nil
+}
+
+func (raspTallyLoader) Params() params.Params {
+	return params.Params{
+		"ip": params.Input{
+			Type:        params.String,
+			Description: "Rasp IP",
+			Required:    true,
+		},
+		"ports_count": params.Input{
+			Type:        params.Number,
+			Description: "Number of outputs",
+			Min:         1,
+			Max:         5,
+		},
+	}
 }

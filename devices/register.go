@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"sync"
+
+	"github.com/johnsudaar/acp/devices/params"
 )
 
 var (
@@ -14,6 +16,7 @@ var (
 type DeviceLoader interface {
 	Load(context.Context, *Base, json.RawMessage) (Device, error)
 	Validate(json.RawMessage) error
+	Params() params.Params
 }
 
 var (

@@ -21,6 +21,7 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	router := handlers.NewRouter(log)
 
 	deviceController := NewDeviceController(graph)
+	deviceTypesController := NewDeviceTypesController()
 	linkController := NewLinkController(graph)
 	router.HandleFunc("/api/ping", Ping).Methods("GET")
 	router.HandleFunc("/api/devices", deviceController.List).Methods("GET")
@@ -29,14 +30,15 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	router.HandleFunc("/api/devices/{id}", deviceController.Destroy).Methods("DELETE")
 	router.HandleFunc("/api/devices/{id}", deviceController.Update).Methods("PATCH", "PUT")
 	router.HandleFunc("/api/devices/{id}/{_dummy:.*}", deviceController.APICall)
-	router.HandleFunc("/api/device_types", deviceController.ListTypes).Methods("GET")
+	router.HandleFunc("/api/device_types", deviceTypesController.List).Methods("GET")
+	router.HandleFunc("/api/device_types/{id}/params", deviceTypesController.Params).Methods("GET")
 	router.HandleFunc("/api/links", linkController.List).Methods("GET")
 	router.HandleFunc("/api/links", linkController.Create).Methods("POST")
 	router.HandleFunc("/api/links/{id}", linkController.Destroy).Methods("DELETE")
 
 	headersOk := muxhandlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"})
 	originsOk := muxhandlers.AllowedOrigins([]string{"*"})
-	methodsOk := muxhandlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELEtE"})
+	methodsOk := muxhandlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"})
 
 	log.WithField("port", config.Port).Info("Starting web server")
 	err := http.ListenAndServe(fmt.Sprintf(":%v", config.Port), muxhandlers.CORS(originsOk, headersOk, methodsOk)(router))

@@ -7,6 +7,7 @@ import (
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/params"
 	"github.com/pkg/errors"
 )
 
@@ -50,4 +51,34 @@ func (jvcHm660Loader) Validate(message json.RawMessage) error {
 	}
 
 	return nil
+}
+
+func (jvcHm660Loader) Params() params.Params {
+	return params.Params{
+		"ip": params.Input{
+			Type:        params.IP,
+			Description: "Camera IP",
+			Required:    true,
+		},
+		"port": params.Input{
+			Type:        params.Number,
+			Description: "Camera Port",
+			Required:    true,
+			Default:     80,
+			Min:         1,
+			Max:         65535,
+		},
+		"user": params.Input{
+			Type:        params.String,
+			Description: "Username for the cam API",
+			Required:    true,
+			Default:     "prohd",
+		},
+		"password": params.Input{
+			Type:        params.String,
+			Description: "Password for the cam API",
+			Required:    true,
+			Default:     "0000",
+		},
+	}
 }

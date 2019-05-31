@@ -8,6 +8,7 @@ import (
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/params"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -50,4 +51,22 @@ func (atemLoader) Validate(message json.RawMessage) error {
 	}
 
 	return nil
+}
+
+func (atemLoader) Params() params.Params {
+	return params.Params{
+		"ip": params.Input{
+			Type:        params.IP,
+			Description: "ATEM IP",
+			Required:    true,
+		},
+		"port": params.Input{
+			Type:        params.Number,
+			Description: "ATEM Port",
+			Required:    true,
+			Default:     9910,
+			Min:         1,
+			Max:         65535,
+		},
+	}
 }

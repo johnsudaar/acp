@@ -75,11 +75,13 @@ func (t *Tally) sendTally(value string) error {
 	if err != nil {
 		return errors.Wrap(err, "fail to encode tally command")
 	}
-	resp, err := http.Post(fmt.Sprintf("http://%s/tally", t.IP), "application/json", &buff)
-	if err != nil {
-		return errors.Wrap(err, "fail to send tally")
+	for i := 0; i < 3; i++ {
+		resp, err := http.Get(fmt.Sprintf("http://%s/tally?tally_id=%v&status=%s", t.IP, i, value))
+		if err != nil {
+			//log.WithError(err).Error("fail to send tally")
+		}
+		defer resp.Body.Close()
 	}
-	defer resp.Body.Close()
 	return nil
 }
 

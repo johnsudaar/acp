@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/params"
 	"github.com/pkg/errors"
 )
 
@@ -39,4 +40,14 @@ func (recorderLoader) Validate(message json.RawMessage) error {
 		return err
 	}
 	return nil
+}
+
+func (recorderLoader) Params() params.Params {
+	return params.Params{
+		"shoot": params.Input{
+			Type:        params.String,
+			Description: "Shoot name",
+			Required:    true,
+		},
+	}
 }

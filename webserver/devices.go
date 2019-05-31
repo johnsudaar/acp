@@ -230,15 +230,6 @@ func (c DeviceController) Destroy(resp http.ResponseWriter, req *http.Request, p
 	return nil
 }
 
-func (DeviceController) ListTypes(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
-	ctx := req.Context()
-
-	types := devices.AvailableTypes()
-
-	utils.JSON(ctx, resp, types)
-	return nil
-}
-
 func (c DeviceController) APICall(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
 	ctx := req.Context()
 	if !bson.IsObjectIdHex(params["id"]) {
