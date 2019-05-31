@@ -3,7 +3,6 @@ package smartview
 import (
 	"context"
 	"encoding/json"
-	"sync"
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
@@ -32,15 +31,15 @@ func (smartviewDuo) Load(ctx context.Context, base *devices.Base, message json.R
 	smartView.IP = params.IP
 	smartView.Base = base
 	smartView.log = logger.Get(ctx)
-	smartView.tallyRefreshChan = make(chan bool, 1)
-	smartView.tallySync = &sync.RWMutex{}
-	smartView.stoppingLock = &sync.Mutex{}
-	smartView.tallyValues = make(map[string]string, params.ScreenCount)
+
+	var outputs []string
 
 	for i := 0; i < params.ScreenCount; i++ {
-		smartView.tallyValues["MONITOR "+string(int('A')+i)] = "NONE"
-
+		outputs = append(outputs, "MONITOR "+string(int('A')+i))
 	}
+
+	smartView.Outputs = outputs
+
 	return &smartView, nil
 }
 

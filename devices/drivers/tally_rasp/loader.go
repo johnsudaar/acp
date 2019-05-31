@@ -3,7 +3,6 @@ package tally
 import (
 	"context"
 	"encoding/json"
-	"sync"
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
@@ -32,9 +31,6 @@ func (raspTallyLoader) Load(ctx context.Context, base *devices.Base, message jso
 	rasp.IP = params.IP
 	rasp.Base = base
 	rasp.log = logger.Get(ctx)
-	rasp.tallyRefreshChan = make(chan bool, 1)
-	rasp.tallySync = &sync.RWMutex{}
-	rasp.stoppingLock = &sync.Mutex{}
 	return &rasp, nil
 }
 

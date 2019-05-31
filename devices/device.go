@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/acp/models"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -32,4 +33,5 @@ type Device interface {
 	Stop() error
 
 	WriteEvent(ctx context.Context, toPort string, name string, data interface{})
+	Types() []types.Type
 }

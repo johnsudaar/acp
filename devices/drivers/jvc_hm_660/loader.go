@@ -37,9 +37,8 @@ func (jvcHm660Loader) Load(ctx context.Context, base *devices.Base, message json
 	cam.Password = params.Password
 	cam.Base = base
 	cam.log = logger.Get(ctx)
+	cam.clientSync = &sync.RWMutex{}
 	cam.stoppingLock = &sync.Mutex{}
-	cam.tallySync = &sync.RWMutex{}
-	cam.tallyRefreshChan = make(chan bool, 1)
 	return &cam, nil
 }
 

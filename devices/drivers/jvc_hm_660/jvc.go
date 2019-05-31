@@ -1,10 +1,12 @@
 package jvc
 
 import (
+	"context"
 	"sync"
 	"time"
 
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/jvc_api/client"
 	"github.com/sirupsen/logrus"
 )
@@ -20,11 +22,8 @@ type JVCHM660 struct {
 	stoppingLock *sync.Mutex
 	stopping     bool
 
-	tallySync        *sync.RWMutex
-	tallyStatus      client.TallyIndication
-	tallyRefreshChan chan bool
-
-	client *client.HTTPClient
+	clientSync *sync.RWMutex
+	client     *client.HTTPClient
 }
 
 func (j *JVCHM660) InputPorts() []string {
@@ -37,7 +36,6 @@ func (j *JVCHM660) OutputPorts() []string {
 
 func (j *JVCHM660) Start() error {
 	go j.watchDog()
-	go j.tallyLoop()
 	return nil
 }
 
@@ -53,20 +51,29 @@ func (j *JVCHM660) connect() {
 	camClient, err := client.New(j.IP, j.User, j.Password)
 	if err != nil {
 		j.log.WithError(err).Error("fail to connect")
+		j.clientSync.Lock()
 		j.client = nil
+		j.clientSync.Unlock()
 		j.SetState(devices.StateNotConnected)
 		return
 	}
 
+	j.clientSync.Lock()
 	j.client = camClient
 	err = j.client.SetTallyLampPriority(client.TallyPriorityWeb)
+	j.clientSync.Unlock()
 	if err != nil {
 		j.log.WithError(err).Error("fail to set tally lamp priority")
 		return
 	}
-	j.tallyRefreshChan <- true
 	j.SetState(devices.StateConnected)
 	j.log.Info("Connected")
+}
+
+func (j *JVCHM660) Types() []types.Type {
+	return []types.Type{types.TallyType}
+}
+func (j *JVCHM660) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {
 }
 
 func (j *JVCHM660) watchDog() {

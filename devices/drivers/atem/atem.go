@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/atem"
 	"github.com/sirupsen/logrus"
 )
@@ -84,4 +85,8 @@ func (a *ATEM) watchDog() {
 
 		time.Sleep(200 * time.Millisecond)
 	}
+}
+
+func (a *ATEM) Types() []types.Type {
+	return []types.Type{}
 }

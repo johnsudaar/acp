@@ -51,5 +51,5 @@ func GetLoader(name string) (DeviceLoader, error) {
 		return nil, ErrTypeNotFound
 	}
 
-	return loader, nil
+	return WrapLoader(loader), nil
 }

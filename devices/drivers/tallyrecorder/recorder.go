@@ -7,6 +7,7 @@ import (
 	"github.com/Scalingo/go-utils/mongo/document"
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/devices/drivers/tallyrecorder/models"
+	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/acp/events"
 	"github.com/sirupsen/logrus"
 )
@@ -31,6 +32,10 @@ func (*Recorder) InputPorts() []string {
 
 func (*Recorder) OutputPorts() []string {
 	return []string{"Tally"}
+}
+
+func (*Recorder) Types() []types.Type {
+	return []types.Type{}
 }
 
 func (r *Recorder) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {

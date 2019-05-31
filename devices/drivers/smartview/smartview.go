@@ -4,58 +4,25 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"sync"
-	"time"
 
+	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
-	"github.com/johnsudaar/acp/events"
-	"github.com/pkg/errors"
+	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/devices/types/tally"
 	"github.com/sirupsen/logrus"
 )
 
 type SmartView struct {
 	*devices.Base
-	IP               string
-	tallyValues      map[string]string
-	tallySync        *sync.RWMutex
-	tallyRefreshChan chan bool
-	log              logrus.FieldLogger
-	stopping         bool
-	stoppingLock     *sync.Mutex
-	client           net.Conn
+	IP      string
+	Outputs []string
+	log     logrus.FieldLogger
+	client  net.Conn
 }
 
 func (t *SmartView) Start() error {
-	go t.tallyLoop()
-	//go t.watchDog()
 	go t.connect()
 	return nil
-}
-
-func (t *SmartView) watchDog() {
-	log := t.log
-	for {
-		// Mutex protection
-		t.stoppingLock.Lock()
-		stopping := t.stopping
-		t.stoppingLock.Unlock()
-
-		if stopping {
-			log.Info("Stopping")
-			if t.client != nil {
-				t.client.Close()
-				t.client = nil
-			}
-			log.Info("Stopped")
-			return
-		}
-
-		if t.State() != devices.StateConnected {
-			log.Info("Reconnecting")
-			t.connect()
-		}
-		time.Sleep(200 * time.Millisecond)
-	}
 }
 
 func (t *SmartView) connect() {
@@ -83,9 +50,6 @@ func (t *SmartView) listen(conn net.Conn) {
 }
 
 func (t *SmartView) Stop() error {
-	t.stoppingLock.Lock()
-	t.stopping = true
-	t.stoppingLock.Unlock()
 	return nil
 }
 
@@ -94,89 +58,36 @@ func (t *SmartView) InputPorts() []string {
 }
 
 func (t *SmartView) OutputPorts() []string {
-	var res []string
-	t.tallySync.RLock()
-	for k, _ := range t.tallyValues {
-		res = append(res, k)
-	}
-	t.tallySync.RUnlock()
-	return res
+	return t.Outputs
 }
 
-func (t *SmartView) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
-	if name == events.TallyEventName {
-		params, ok := data.(events.TallyEvent)
-		if !ok {
-			t.log.Error("Invalid data type for tally event")
-		}
-
-		tallyValue := "NONE"
-		if params.Program {
-			tallyValue = "RED"
-		} else if params.Preview {
-			tallyValue = "GREEN"
-		}
-		t.log.WithField("tally", tallyValue).Info("SetTally")
-		t.tallySync.Lock()
-		if _, ok := t.tallyValues[toPort]; !ok {
-			t.log.WithField("port", toPort).Error("Port not found")
-		} else {
-			t.tallyValues[toPort] = tallyValue
-		}
-		t.tallySync.Unlock()
-		t.tallyRefreshChan <- true
-	}
+func (t *SmartView) Types() []types.Type {
+	return []types.Type{types.TallyType}
+}
+func (t *SmartView) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {
 }
 
-func (t *SmartView) sendTally(port, value string) error {
+func (t *SmartView) SendTally(ctx context.Context, port string, value tally.Value) {
+	log := logger.Get(ctx)
 	if t.client == nil {
-		return errors.New("Not connected")
+		log.Error("Client not initialized")
+		return
 	}
 
-	payload := fmt.Sprintf("%s\nBorder: %s\n\n", port, value)
+	payload := fmt.Sprintf("%s\nBorder: %s\n\n", port, t.toTallyString(value))
 
 	_, err := t.client.Write([]byte(payload))
 	if err != nil {
-		return errors.Wrap(err, "fail to write to tally")
+		log.WithError(err).Error("fail to send command to smartview")
+		return
 	}
-
-	return nil
 }
-
-func (t *SmartView) tallyLoop() {
-	log := t.log.WithField("source", "tallyLoop")
-	for {
-		// Are we stopping?
-
-		t.stoppingLock.Lock()
-		stopping := t.stopping
-		t.stoppingLock.Unlock()
-		if stopping {
-			return
-		}
-
-		// Get current tally value
-		t.tallySync.RLock()
-		for port, value := range t.tallyValues {
-			log.WithFields(logrus.Fields{
-				"port":  port,
-				"value": value,
-			}).Info("Refresh tally")
-
-			go func() {
-				err := t.sendTally(port, value)
-				if err != nil {
-					log.WithError(err).Error("fail to refresh tallyA")
-				}
-			}()
-
-		}
-		t.tallySync.RUnlock()
-
-		timer := time.NewTimer(3 * time.Second)
-		select {
-		case <-timer.C:
-		case <-t.tallyRefreshChan:
-		}
+func (t *SmartView) toTallyString(value tally.Value) string {
+	switch value {
+	case tally.Program:
+		return "RED"
+	case tally.Preview:
+		return "GREEN"
 	}
+	return "NONE"
 }

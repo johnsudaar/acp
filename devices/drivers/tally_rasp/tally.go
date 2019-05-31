@@ -6,36 +6,38 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"sync"
 	"time"
 
+	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
-	"github.com/johnsudaar/acp/events"
-	"github.com/pkg/errors"
+	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/devices/types/tally"
 	"github.com/sirupsen/logrus"
 )
 
+// Check if this can work as a tally
+
+var _ tally.Tallyable = &Tally{}
+
 type Tally struct {
 	*devices.Base
-	IP               string
-	tallyValue       string
-	tallySync        *sync.RWMutex
-	tallyRefreshChan chan bool
-	log              logrus.FieldLogger
-	stopping         bool
-	stoppingLock     *sync.Mutex
+	IP  string
+	log logrus.FieldLogger
 }
 
 func (t *Tally) Start() error {
-	go t.tallyLoop()
 	return nil
 }
 
 func (t *Tally) Stop() error {
-	t.stoppingLock.Lock()
-	t.stopping = true
-	t.stoppingLock.Unlock()
 	return nil
+}
+
+func (t *Tally) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
+}
+
+func (t *Tally) Types() []types.Type {
+	return []types.Type{types.TallyType}
 }
 
 func (t *Tally) InputPorts() []string {
@@ -46,74 +48,35 @@ func (t *Tally) OutputPorts() []string {
 	return []string{"Tally"}
 }
 
-func (t *Tally) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
-	if name == events.TallyEventName {
-		params, ok := data.(events.TallyEvent)
-		if !ok {
-			t.log.Error("Invalid data type for tally event")
-		}
-
-		tallyValue := "off"
-		if params.Program {
-			tallyValue = "pgm"
-		} else if params.Preview {
-			tallyValue = "pvw"
-		}
-		t.log.WithField("tally", tallyValue).Info("SetTally")
-		t.tallySync.Lock()
-		t.tallyValue = tallyValue
-		t.tallySync.Unlock()
-		t.tallyRefreshChan <- true
-	}
-}
-
-func (t *Tally) sendTally(value string) error {
+func (t *Tally) SendTally(ctx context.Context, port string, value tally.Value) {
+	log := logger.Get(ctx)
 	var buff bytes.Buffer
 	err := json.NewEncoder(&buff).Encode(map[string]string{
-		"status": value,
+		"tally_id": port,
+		"status":   t.toTallyString(value),
 	})
+
+	url := fmt.Sprintf("http://%s/tally", t.IP)
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	resp, err := client.Post(url, "application/json", &buff)
 	if err != nil {
-		return errors.Wrap(err, "fail to encode tally command")
+		log.WithError(err).Error("fail to write tally")
+		return
 	}
-	for i := 0; i < 3; i++ {
-		resp, err := http.Get(fmt.Sprintf("http://%s/tally?tally_id=%v&status=%s", t.IP, i, value))
-		if err != nil {
-			//log.WithError(err).Error("fail to send tally")
-		}
-		defer resp.Body.Close()
-	}
-	return nil
+	resp.Body.Close()
 }
 
-func (t *Tally) tallyLoop() {
-	log := t.log.WithField("source", "tallyLoop")
-	for {
-		// Are we stopping?
-
-		t.stoppingLock.Lock()
-		stopping := t.stopping
-		t.stoppingLock.Unlock()
-		if stopping {
-			return
-		}
-
-		// Get current tally value
-		t.tallySync.RLock()
-		tallyValue := t.tallyValue
-		t.tallySync.RUnlock()
-
-		if tallyValue != "" {
-			log.WithField("status", tallyValue).Info("Refresh tally")
-			err := t.sendTally(tallyValue)
-			if err != nil {
-				log.WithError(err).Error("fail to refresh tally")
-			}
-		}
-
-		timer := time.NewTimer(3 * time.Second)
-		select {
-		case <-timer.C:
-		case <-t.tallyRefreshChan:
-		}
+func (t *Tally) toTallyString(value tally.Value) string {
+	switch value {
+	case tally.Program:
+		return "pgm"
+	case tally.Preview:
+		return "pvw"
+	case tally.Off:
+		return "off"
 	}
+
+	return "off"
 }
