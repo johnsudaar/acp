@@ -27,6 +27,7 @@ func (j *JVCHM660) SendTally(ctx context.Context, port string, value tally.Value
 		return
 	}
 
+	log.Info(tallyStatus)
 	err := client.SetStudioTally(tallyStatus)
 	if err != nil {
 		j.SetState(devices.StateNotConnected)

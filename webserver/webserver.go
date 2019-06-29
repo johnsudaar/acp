@@ -35,6 +35,7 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	router.HandleFunc("/api/links", linkController.List).Methods("GET")
 	router.HandleFunc("/api/links", linkController.Create).Methods("POST")
 	router.HandleFunc("/api/links/{id}", linkController.Destroy).Methods("DELETE")
+	router.Router.PathPrefix("/").HandlerFunc(Front)
 
 	headersOk := muxhandlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"})
 	originsOk := muxhandlers.AllowedOrigins([]string{"*"})
@@ -54,4 +55,8 @@ func Ping(resp http.ResponseWriter, req *http.Request, params map[string]string)
 	})
 
 	return nil
+}
+
+func Front(resp http.ResponseWriter, req *http.Request) {
+	http.FileServer(http.Dir("public/")).ServeHTTP(resp, req)
 }

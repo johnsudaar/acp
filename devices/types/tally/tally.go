@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	handlers "github.com/Scalingo/go-handlers"
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
 )
@@ -97,4 +98,8 @@ func (t *TallyDriver) refreshAllTallies(ctx context.Context) {
 		}
 		go t.device.SendTally(ctx, port, value)
 	}
+}
+
+func (p *TallyDriver) Routes() map[string]handlers.HandlerFunc {
+	return nil
 }

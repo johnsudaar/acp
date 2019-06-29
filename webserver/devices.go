@@ -106,6 +106,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	ctx := req.Context()
 	log := logger.Get(ctx)
 	device := models.Device{}
+	log.Info("Start device import")
 
 	// Decode the generic model
 	err := json.NewDecoder(req.Body).Decode(&device)
@@ -122,6 +123,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	})
 	ctx = logger.ToCtx(ctx, log)
 
+	log.Info("Load device")
 	// Find the device type in the loader
 	loader, err := devices.GetLoader(device.Type)
 	if err != nil { // if there was an error while finding the device type
@@ -137,6 +139,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	}
 
 	// We found a loader for this device
+	log.Info("Validate")
 
 	// Validate the specialized params
 	err = loader.Validate(device.Params)
@@ -146,21 +149,25 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 		return nil
 	}
 
+	log.Info("Save")
 	// If everything checked out store this in the database
 	err = document.Save(ctx, models.DeviceCollection, &device)
 	if err != nil {
+		log.WithError(err).Error("Fail to save it")
 		return errors.Wrap(err, "fail to save device")
 	}
 
 	// Create a new context so the device wont be affected by the request (imeouts, etc.)
 	ctx = logger.ToCtx(context.Background(), log)
 
+	log.Info("Add device to the graph")
 	// Add the device to the graph
 	dev, err := c.graph.Add(ctx, device.ID.Hex())
 	if err != nil {
 		return errors.Wrap(err, "fail to add device")
 	}
 
+	log.Info("Device imported")
 	deviceResp := DetailedDeviceResponse{
 		DeviceResponse: deviceToDeviceResponse(dev),
 		InputPorts:     dev.InputPorts(),

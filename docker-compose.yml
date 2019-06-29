@@ -9,6 +9,8 @@ services:
       PORT: 8081
     ports:
       - 8081:8081
+      - 9090:9090
+      - 9091:9091
     links:
       - mongo
     command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp'

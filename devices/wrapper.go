@@ -2,14 +2,18 @@ package devices
 
 import (
 	"context"
+	"io/ioutil"
 	"net/http"
 	"sync"
 
+	handlers "github.com/Scalingo/go-handlers"
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/devices/types/ptz"
 	"github.com/johnsudaar/acp/devices/types/tally"
 	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -31,6 +35,12 @@ func Wrap(d Device) (Device, error) {
 				return nil, errors.Wrapf(err, "fail to import device type %s", t)
 			}
 			deviceTypes[t] = tally
+		case types.PTZType:
+			ptz, err := ptz.Import(d)
+			if err != nil {
+				return nil, errors.Wrapf(err, "fail to import device type %s", t)
+			}
+			deviceTypes[t] = ptz
 		}
 
 	}
@@ -66,7 +76,24 @@ func (d *DeviceWrapper) OutputPorts() []string {
 }
 
 func (d *DeviceWrapper) API() http.Handler {
-	return d.Implementation.API()
+	log := logrus.New()
+	log.Out = ioutil.Discard
+	router := handlers.NewRouter(log)
+
+	d.TypesLock.Lock()
+	for _, t := range d.DeviceTypes {
+		routes := t.Routes()
+		if routes == nil {
+			continue
+		}
+
+		for route, handler := range routes {
+			router.HandleFunc(route, handler)
+		}
+	}
+	d.TypesLock.Unlock()
+	router.PathPrefix("/").Handler(d.Implementation.API())
+	return router
 }
 
 func (d *DeviceWrapper) Start() error {

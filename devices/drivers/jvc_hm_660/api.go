@@ -27,7 +27,7 @@ type RecResponse struct {
 
 func (a *JVCHM660) RecStatus(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
 	ctx := req.Context()
-	if a.State() == devices.StateConnected {
+	if a.State() != devices.StateConnected {
 		utils.Err(ctx, resp, http.StatusBadRequest, "device not connected")
 		return nil
 	}

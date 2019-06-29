@@ -8,6 +8,7 @@ import (
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/devices/drivers"
 	"github.com/johnsudaar/acp/graph"
+	"github.com/johnsudaar/acp/tests/proxy"
 	"github.com/johnsudaar/acp/webserver"
 	"github.com/pkg/errors"
 )
@@ -42,4 +43,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	proxy.Start()
 }

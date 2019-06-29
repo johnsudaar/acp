@@ -64,11 +64,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5b011bc634d800be66e217f9e67a7aa0b6e97ac11676c4f62681c6c95390ad3c"
+  digest = "1:dfc7c0b1223c0fc09e58e0ebd0d7a25e769ced049828be214b66027cd6b674a4"
   name = "github.com/johnsudaar/jvc_api"
   packages = ["client"]
   pruneopts = "UT"
-  revision = "2b7e3796ff6b7cec5f6ca71548a0b95f491d9e40"
+  revision = "f3adc3d92d97014b6bd8c0e2a10a9e76d045ba92"
 
 [[projects]]
   digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"
@@ -117,6 +117,14 @@
   pruneopts = "UT"
   revision = "bcd833dfe83d3cebad139e4a29ed79cb2318bf95"
   version = "v1.2.0"
+
+[[projects]]
+  digest = "1:f3a8fd592d6f5355c3a8817ec8552e3ba1fb616799d945c3e56b006e8a26f203"
+  name = "github.com/stianeikeland/go-rpio"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d43a3ce8186d47f497a6785f997400a1b2f1fdc7"
+  version = "v4.4.0"
 
 [[projects]]
   digest = "1:220454f22582ee261c09b310a14e6979886069808a696005c5ca998f80eca0cf"
@@ -180,6 +188,7 @@
     "github.com/kelseyhightower/envconfig",
     "github.com/pkg/errors",
     "github.com/sirupsen/logrus",
+    "github.com/stianeikeland/go-rpio",
     "gopkg.in/mgo.v2/bson",
   ]
   solver-name = "gps-cdcl"

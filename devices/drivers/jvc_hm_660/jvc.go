@@ -71,7 +71,7 @@ func (j *JVCHM660) connect() {
 }
 
 func (j *JVCHM660) Types() []types.Type {
-	return []types.Type{types.TallyType}
+	return []types.Type{types.TallyType, types.PTZType}
 }
 func (j *JVCHM660) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {
 }
