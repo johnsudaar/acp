@@ -10,6 +10,7 @@ import (
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/acp/devices/types/ptz"
+	"github.com/johnsudaar/acp/devices/types/switcher"
 	"github.com/johnsudaar/acp/devices/types/tally"
 	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
@@ -41,6 +42,12 @@ func Wrap(d Device) (Device, error) {
 				return nil, errors.Wrapf(err, "fail to import device type %s", t)
 			}
 			deviceTypes[t] = ptz
+		case types.SwitcherType:
+			switcher, err := switcher.Import(d)
+			if err != nil {
+				return nil, errors.Wrapf(err, "fail to import device type %s", t)
+			}
+			deviceTypes[t] = switcher
 		}
 
 	}

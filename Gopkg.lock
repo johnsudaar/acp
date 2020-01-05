@@ -23,6 +23,14 @@
   version = "v5.5.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:46b600931245bb1338e66b620ea111997710d88ca14deb3909cb9e3235255772"
+  name = "github.com/a-contre-plongee/hs50"
+  packages = ["client"]
+  pruneopts = "UT"
+  revision = "318a81dc8a72f7d3d3f321c1965bf280ab21fbd5"
+
+[[projects]]
   digest = "1:d688f4ad71b5dfad95c2d74cb0feac09f8f3c32ae5cecc078230dbdeece39e53"
   name = "github.com/codegangsta/negroni"
   packages = ["."]
@@ -182,6 +190,7 @@
     "github.com/Scalingo/go-handlers",
     "github.com/Scalingo/go-utils/logger",
     "github.com/Scalingo/go-utils/mongo/document",
+    "github.com/a-contre-plongee/hs50/client",
     "github.com/gorilla/handlers",
     "github.com/johnsudaar/atem",
     "github.com/johnsudaar/jvc_api/client",

@@ -32,18 +32,14 @@ type DeviceController struct {
 }
 
 type DeviceResponse struct {
-	ID    string        `json:"id"`
-	Name  string        `json:"name"`
-	Type  string        `json:"type"`
-	Types []types.Type  `json:"types"`
-	State devices.State `json:"state"`
-}
-
-type DetailedDeviceResponse struct {
-	DeviceResponse
-	DisplayOpts interface{} `json:"display_opts,omitempty"`
-	InputPorts  []string    `json:"input_ports"`
-	OutputPorts []string    `json:"output_ports"`
+	ID          string        `json:"id"`
+	Name        string        `json:"name"`
+	Type        string        `json:"type"`
+	Types       []types.Type  `json:"types"`
+	State       devices.State `json:"state"`
+	DisplayOpts interface{}   `json:"display_opts,omitempty"`
+	InputPorts  []string      `json:"input_ports"`
+	OutputPorts []string      `json:"output_ports"`
 }
 
 type DeviceUpdateParams struct {
@@ -57,7 +53,7 @@ func (c DeviceController) List(resp http.ResponseWriter, req *http.Request, para
 
 	// For each device in the device graph, get the corresponding DeviceResponse struct
 	for _, device := range c.graph.All(ctx) {
-		devices = append(devices, deviceToDeviceResponse(device))
+		devices = append(devices, deviceToDeviceResponse(device, nil))
 	}
 
 	utils.JSON(ctx, resp, devices)
@@ -92,12 +88,7 @@ func (c DeviceController) Show(resp http.ResponseWriter, req *http.Request, para
 	}
 
 	// Convert the graph device representation to a DetailedDeviceResponse
-	deviceResp := DetailedDeviceResponse{
-		DeviceResponse: deviceToDeviceResponse(device),
-		InputPorts:     device.InputPorts(),
-		OutputPorts:    device.OutputPorts(),
-		DisplayOpts:    dev.DisplayOpts,
-	}
+	deviceResp := deviceToDeviceResponse(device, &dev)
 
 	utils.JSON(ctx, resp, deviceResp)
 	return nil
@@ -170,12 +161,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 	}
 
 	log.Info("Device imported")
-	deviceResp := DetailedDeviceResponse{
-		DeviceResponse: deviceToDeviceResponse(dev),
-		InputPorts:     dev.InputPorts(),
-		OutputPorts:    dev.OutputPorts(),
-		DisplayOpts:    device.DisplayOpts,
-	}
+	deviceResp := deviceToDeviceResponse(dev, &device)
 	utils.JSON(ctx, resp, deviceResp)
 
 	return nil
@@ -270,12 +256,18 @@ func (c DeviceController) APICall(resp http.ResponseWriter, req *http.Request, p
 	return nil
 }
 
-func deviceToDeviceResponse(device devices.Device) DeviceResponse {
-	return DeviceResponse{
-		ID:    device.ID().Hex(),
-		Name:  device.Name(),
-		Type:  device.Type(),
-		Types: device.Types(),
-		State: device.State(),
+func deviceToDeviceResponse(device devices.Device, dev *models.Device) DeviceResponse {
+	resp := DeviceResponse{
+		ID:          device.ID().Hex(),
+		Name:        device.Name(),
+		Type:        device.Type(),
+		Types:       device.Types(),
+		State:       device.State(),
+		InputPorts:  device.InputPorts(),
+		OutputPorts: device.OutputPorts(),
 	}
+	if dev != nil {
+		resp.DisplayOpts = dev.DisplayOpts
+	}
+	return resp
 }

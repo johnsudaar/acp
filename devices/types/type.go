@@ -18,8 +18,9 @@ type DeviceType interface {
 type Type string
 
 const (
-	TallyType Type = "tally"
-	PTZType   Type = "ptz"
+	TallyType    Type = "tally"
+	PTZType      Type = "ptz"
+	SwitcherType Type = "switcher"
 )
 
 var (
