@@ -64,11 +64,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:dfc7c0b1223c0fc09e58e0ebd0d7a25e769ced049828be214b66027cd6b674a4"
+  digest = "1:aa9558b97d9a915c445adaed0c09ca1cb119ec8feb5567eb276a64c23753a422"
   name = "github.com/johnsudaar/jvc_api"
   packages = ["client"]
   pruneopts = "UT"
-  revision = "f3adc3d92d97014b6bd8c0e2a10a9e76d045ba92"
+  revision = "91d20297bbd2075462d94930a81fb610b0a5c219"
 
 [[projects]]
   digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"

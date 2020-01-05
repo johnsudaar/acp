@@ -9,6 +9,7 @@ import (
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/Scalingo/go-utils/mongo/document"
 	"github.com/johnsudaar/acp/devices"
+	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/acp/graph"
 	"github.com/johnsudaar/acp/models"
 	"github.com/johnsudaar/acp/utils"
@@ -34,6 +35,7 @@ type DeviceResponse struct {
 	ID    string        `json:"id"`
 	Name  string        `json:"name"`
 	Type  string        `json:"type"`
+	Types []types.Type  `json:"types"`
 	State devices.State `json:"state"`
 }
 
@@ -151,7 +153,7 @@ func (c DeviceController) Create(resp http.ResponseWriter, req *http.Request, pa
 
 	log.Info("Save")
 	// If everything checked out store this in the database
-	err = document.Save(ctx, models.DeviceCollection, &device)
+	err = document.Create(ctx, models.DeviceCollection, &device)
 	if err != nil {
 		log.WithError(err).Error("Fail to save it")
 		return errors.Wrap(err, "fail to save device")
@@ -273,6 +275,7 @@ func deviceToDeviceResponse(device devices.Device) DeviceResponse {
 		ID:    device.ID().Hex(),
 		Name:  device.Name(),
 		Type:  device.Type(),
+		Types: device.Types(),
 		State: device.State(),
 	}
 }

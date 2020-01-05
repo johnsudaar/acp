@@ -39,10 +39,10 @@ func main() {
 
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
+	go proxy.Start()
 	err = webserver.Start(ctx, graph)
 	if err != nil {
 		panic(err)
 	}
 
-	proxy.Start()
 }

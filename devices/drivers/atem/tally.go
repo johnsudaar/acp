@@ -16,7 +16,7 @@ func (a *ATEM) WriteTally(tallies atem.TallyStatuses) {
 	var preview []string
 
 	for _, tally := range tallies {
-		log.WithFields(logrus.Fields{
+		log := log.WithFields(logrus.Fields{
 			"port":    tally.Source.String(),
 			"preview": tally.Preview,
 			"program": tally.Program,

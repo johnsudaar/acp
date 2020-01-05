@@ -23,8 +23,8 @@ import (
 // - PGM: GPIO 17, Color: Green
 
 var (
-	previewPorts = []uint8{4, 24, 22, 18}
-	programPorts = []uint8{25, 23, 27, 17}
+	programPorts = []uint8{4, 24, 22, 18}
+	previewPorts = []uint8{25, 23, 27, 17}
 )
 
 func (t *tallybox) initGPIO() {

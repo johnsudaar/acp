@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/Scalingo/go-utils/logger"
@@ -21,8 +22,9 @@ var _ tally.Tallyable = &Tally{}
 
 type Tally struct {
 	*devices.Base
-	IP  string
-	log logrus.FieldLogger
+	IP         string
+	log        logrus.FieldLogger
+	portsCount int
 }
 
 func (t *Tally) Start() error {
@@ -45,10 +47,30 @@ func (t *Tally) InputPorts() []string {
 }
 
 func (t *Tally) OutputPorts() []string {
-	return []string{"Tally"}
+	ports := make([]string, t.portsCount)
+	for i := 0; i < t.portsCount; i++ {
+		ports[i] = strconv.Itoa(i)
+	}
+	return ports
 }
 
 func (t *Tally) SendTally(ctx context.Context, port string, value tally.Value) {
+	log := logger.Get(ctx)
+	url := fmt.Sprintf("http://%s/tally?tally_id=%s&status=%s", t.IP, port, t.toTallyString(value))
+	log.Info(url)
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	resp, err := client.Get(url)
+	if err != nil {
+		log.WithError(err).Error("fail to write tally")
+		return
+	}
+	resp.Body.Close()
+
+}
+
+func (t *Tally) SendTally2(ctx context.Context, port string, value tally.Value) {
 	log := logger.Get(ctx)
 	var buff bytes.Buffer
 	err := json.NewEncoder(&buff).Encode(map[string]string{

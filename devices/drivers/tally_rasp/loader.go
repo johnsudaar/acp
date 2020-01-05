@@ -12,7 +12,7 @@ import (
 
 type TallyParams struct {
 	IP         string `json:"ip"`
-	PortsCount int    `json:"port_count"`
+	PortsCount int    `json:"ports_count"`
 }
 
 type raspTallyLoader struct{}
@@ -31,6 +31,7 @@ func (raspTallyLoader) Load(ctx context.Context, base *devices.Base, message jso
 	rasp.IP = params.IP
 	rasp.Base = base
 	rasp.log = logger.Get(ctx)
+	rasp.portsCount = params.PortsCount
 	return &rasp, nil
 }
 

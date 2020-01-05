@@ -74,7 +74,7 @@ func (t *SmartView) SendTally(ctx context.Context, port string, value tally.Valu
 		return
 	}
 
-	payload := fmt.Sprintf("%s\nBorder: %s\n\n", port, t.toTallyString(value))
+	payload := fmt.Sprintf("%s:\nBorder: %s\n\n", port, t.toTallyString(value))
 
 	_, err := t.client.Write([]byte(payload))
 	if err != nil {
