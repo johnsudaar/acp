@@ -10,7 +10,7 @@
   version = "v1.2.4"
 
 [[projects]]
-  digest = "1:2020e55003ee4ff8693dc5fe5e93132f0f681ec6495ee6fdf7486fb93ebb5e96"
+  digest = "1:4b54ea7d877729c8d4bfd4142ab6dbc9f20b3598f1dc6b6fc06577088637962d"
   name = "github.com/Scalingo/go-utils"
   packages = [
     "errors",
@@ -19,8 +19,8 @@
     "mongo/document",
   ]
   pruneopts = "UT"
-  revision = "d8c68a6469f0b8242544cf7dc36cbb6ab8ed0f9d"
-  version = "v5.5.1"
+  revision = "a3018e9456dc223a42169f3cb1df6e3d04f0e45b"
+  version = "v5.6.1"
 
 [[projects]]
   branch = "master"
