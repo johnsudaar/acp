@@ -52,6 +52,8 @@ pushd acp-$VERSION > /dev/null
 
 echo "[+] Back: Installing gox"
 go get -u github.com/mitchellh/gox
+echo "[+] Back: go mod vendor"
+go mod vendor | ident
 echo "[+] Back: Building"
 gox -os="linux" -arch="amd64 386 arm" -output="dist/acp-$VERSION-{{.OS}}-{{.Arch}}/acp" -ldflags="-X main.Version=$VERSION" .
 pushd dist > /dev/null
