@@ -19,10 +19,10 @@ if [ $# -ne 1 ]; then
   fatal "Usage: $0 [VERSION]" >&2
 fi
 
-VERSION=$1
+VERSION=$(echo $1 | sed s/v//)
 
 BASE_DIR=$(pwd)
-mkdir dist
+mkdir dist || true
 
 echo "[+] Releasing version $VERSION"
 
