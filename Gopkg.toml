@@ -49,6 +49,10 @@
   branch = "master"
   name = "github.com/satori/go.uuid"
 
+[[override]]
+  name = "github.com/russross/blackfriday"
+  version = "1.5.2"
+
 [prune]
   go-tests = true
   unused-packages = true
