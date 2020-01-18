@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"github.com/Scalingo/go-utils/logger"
+	"github.com/urfave/cli"
 
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/devices/drivers"
@@ -13,7 +16,32 @@ import (
 	"github.com/pkg/errors"
 )
 
+var (
+	Version = "dev"
+)
+
 func main() {
+	app := &cli.App{
+		Name:    "acp",
+		Version: Version,
+		Commands: []cli.Command{
+			{
+				Name: "start",
+				Action: func(c *cli.Context) error {
+					StartServer()
+					return nil
+				},
+			},
+		},
+	}
+
+	err := app.Run(os.Args)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func StartServer() {
 	// ------------ Initialization -------------------
 	// Load App config
 	err := config.Init()
