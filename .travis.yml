@@ -1,0 +1,18 @@
+language: go
+go:
+  - '1.x'
+
+script:
+  - ./bin/release.sh $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: johnsudaar/acp
+  file_glob: true
+  file:
+    - "dist/*.zip"
+  api_key:
+    secure: b5D0kNRcwL5GI6wGF+C1pF4Y6aIZ6zDjo5mWwHRWJanf2uPdKYQga3U0BmPicoFOyKqIYBvOLhAUIE/LlLRzKkXN+5wFFX3G7fGUgHb04YFgwRDM6mpa0h4rrdqqhV+UJTmW7hU1VVx1j4JzozuA+IDsuYZY16v2uZimAgH1GK8qBA8UUEeSqS9AyhORv2WcGJDfoixivO3QBwbzNaLJsOirOGYynCbQK3rec4QB4xFcyBESiQC6qOX3YzQFytasyM5I9Jwx+bz+rIwfyDIvOJIw3yStApMRm7JE8Re7+GumXIYacp46QytWF84VPU3BVSjBD9F9sA9GfiA1ySllLam07MTeSfjINjVOvWOmXpdqPSD3tLfrK67jYzSTQ4SWeBwK1tsnHn0vyYFJXfQw0SxdZEvExkbLaEIm+1YL6D+Zzm+VT+NFy3NJquE7q20o5vDT17HjQKMH+6tXqm0BPegapVXK0mi0KYbi6954o8MCRoJIBhPUnCsdbP34jFvkf9A4BaTyJihFS8cdboEF6kIB8pAgo0KpOThZZkWzn12UNiq+HJDdVXJe4KgVuss2YFbL5o5gD6b1TbHTJV9lpS8hlfkVLUWN6iVHMYanxee/hS5bxyPEjlbQZlbpZnA/ACGDL9U6SSwijEVRXNF1oj3A3gYVsqWBXghokVbKt9I=
