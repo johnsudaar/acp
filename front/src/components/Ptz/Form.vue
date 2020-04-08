@@ -1,0 +1,134 @@
+<template>
+  <v-layout row wrap>
+    <v-flex xs12>
+      <v-text-field
+        v-model="name"
+        label="Position name"
+        />
+    </v-flex>
+    <v-flex xs9>
+      <v-slider
+        v-model="pan"
+        step="0.1"
+        :max="100"
+        label="Pan"
+        ></v-slider>
+    </v-flex>
+
+    <v-flex xs3>
+      <v-text-field
+        step=".1"
+        v-model="pan"
+        class="mt-0 ml-2"
+        type="number"
+        ></v-text-field>
+    </v-flex>
+    <v-flex xs9>
+      <v-slider
+        v-model="tilt"
+        step="0.1"
+        :max="100"
+        label="Tilt"
+        ></v-slider>
+    </v-flex>
+
+    <v-flex xs3>
+      <v-text-field
+        step=".1"
+        v-model="tilt"
+        class="mt-0 ml-2"
+        type="number"
+        ></v-text-field>
+    </v-flex>
+    <v-flex xs9>
+      <v-slider
+        v-model="zoom"
+        step="0.1"
+        :max="100"
+        label="Zoom"
+        ></v-slider>
+    </v-flex>
+
+    <v-flex xs3>
+      <v-text-field
+        step=".1"
+        v-model="zoom"
+        class="mt-0 ml-2"
+        type="number"
+        ></v-text-field>
+    </v-flex>
+  </v-layout>
+</template>
+
+<script>
+export default {
+  props: {
+    pos: Object,
+    device: Object,
+  },
+  data () {
+    return {
+      pan: 0.0,
+      tilt: 0.0,
+      zoom: 0.0,
+      name: "",
+      updateTimeout: null,
+    }
+  },
+  mounted() {
+    this.copyPosParams()
+  },
+  watch: {
+    pos: function() {
+      this.copyPosParams()
+    },
+    name: function() {
+      this.onInputChanged()
+    },
+    pan: function() {
+      this.onInputChanged()
+    },
+    tilt: function() {
+      this.onInputChanged()
+    },
+    zoom: function() {
+      this.onInputChanged()
+    }
+  },
+  methods: {
+    copyPosParams() {
+      if(!this.pos) {
+        return
+      }
+      this.pan = this.pos.pan
+      this.tilt = this.pos.tilt
+      this.zoom = this.pos.zoom
+      this.name = this.pos.name
+      this.onInputChanged()
+    },
+    previewPosition() {
+      this.$store.state.config.apiClient.ptz.position(this.device.id, {
+        pan: this.pan,
+        tilt: this.tilt,
+        zoom: this.zoom,
+        focus: 0,
+      })
+      this.updateTimeout = null
+    },
+    onInputChanged() {
+      this.$emit('changed', {
+        pan: this.pan,
+        tilt: this.tilt,
+        zoom: this.zoom,
+        name: this.name,
+      })
+      if(this.updateTimeout != null) {
+        return
+      }
+      this.updateTimeout = setTimeout(()=> {
+        this.previewPosition()
+      }, 100)
+    },
+  }
+}
+</script>
