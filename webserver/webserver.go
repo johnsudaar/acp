@@ -41,8 +41,8 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	originsOk := muxhandlers.AllowedOrigins([]string{"*"})
 	methodsOk := muxhandlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"})
 
-	log.WithField("port", config.Port).Info("Starting web server")
-	err := http.ListenAndServe(fmt.Sprintf(":%v", config.Port), muxhandlers.CORS(originsOk, headersOk, methodsOk)(router))
+	log.WithField("port", config.Server.Port).Info("Starting web server")
+	err := http.ListenAndServe(fmt.Sprintf(":%v", config.Server.Port), muxhandlers.CORS(originsOk, headersOk, methodsOk)(router))
 	if err != nil {
 		return errors.Wrap(err, "HTTP server failed")
 	}

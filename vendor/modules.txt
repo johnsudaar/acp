@@ -11,20 +11,37 @@ github.com/a-contre-plongee/hs50/client
 github.com/codegangsta/negroni
 # github.com/cpuguy83/go-md2man v1.0.10
 github.com/cpuguy83/go-md2man/md2man
+# github.com/fsnotify/fsnotify v1.4.7
+github.com/fsnotify/fsnotify
 # github.com/gorilla/context v1.1.1
 github.com/gorilla/context
 # github.com/gorilla/handlers v1.4.0
 github.com/gorilla/handlers
 # github.com/gorilla/mux v1.6.2
 github.com/gorilla/mux
+# github.com/hashicorp/hcl v1.0.0
+github.com/hashicorp/hcl
+github.com/hashicorp/hcl/hcl/ast
+github.com/hashicorp/hcl/hcl/parser
+github.com/hashicorp/hcl/hcl/printer
+github.com/hashicorp/hcl/hcl/scanner
+github.com/hashicorp/hcl/hcl/strconv
+github.com/hashicorp/hcl/hcl/token
+github.com/hashicorp/hcl/json/parser
+github.com/hashicorp/hcl/json/scanner
+github.com/hashicorp/hcl/json/token
 # github.com/johnsudaar/atem v0.0.0-20190315203433-58de10515507
 github.com/johnsudaar/atem
 # github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 github.com/johnsudaar/jvc_api/client
-# github.com/kelseyhightower/envconfig v1.3.0
-github.com/kelseyhightower/envconfig
 # github.com/konsorten/go-windows-terminal-sequences v1.0.1
 github.com/konsorten/go-windows-terminal-sequences
+# github.com/magiconair/properties v1.8.1
+github.com/magiconair/properties
+# github.com/mitchellh/mapstructure v1.1.2
+github.com/mitchellh/mapstructure
+# github.com/pelletier/go-toml v1.2.0
+github.com/pelletier/go-toml
 # github.com/phayes/freeport v0.0.0-20171002181615-b8543db493a5
 github.com/phayes/freeport
 # github.com/pkg/errors v0.8.0
@@ -35,22 +52,42 @@ github.com/russross/blackfriday
 github.com/satori/go.uuid
 # github.com/sirupsen/logrus v1.2.0
 github.com/sirupsen/logrus
+# github.com/spf13/afero v1.1.2
+github.com/spf13/afero
+github.com/spf13/afero/mem
+# github.com/spf13/cast v1.3.0
+github.com/spf13/cast
+# github.com/spf13/jwalterweatherman v1.0.0
+github.com/spf13/jwalterweatherman
+# github.com/spf13/pflag v1.0.3
+github.com/spf13/pflag
+# github.com/spf13/viper v1.6.2
+github.com/spf13/viper
 # github.com/stianeikeland/go-rpio v4.2.0+incompatible
 github.com/stianeikeland/go-rpio
+# github.com/subosito/gotenv v1.2.0
+github.com/subosito/gotenv
 # github.com/urfave/cli v1.22.0
 github.com/urfave/cli
 # github.com/xinsnake/go-http-digest-auth-client v0.4.0
 github.com/xinsnake/go-http-digest-auth-client
-# golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc
+# golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/sys v0.0.0-20190102155601-82a175fd1598
+# golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/text v0.3.0
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
 # gopkg.in/errgo.v1 v1.0.1-0.20180818175205-2393dcb27450
 gopkg.in/errgo.v1
+# gopkg.in/ini.v1 v1.51.0
+gopkg.in/ini.v1
 # gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 gopkg.in/mgo.v2
 gopkg.in/mgo.v2/bson
 gopkg.in/mgo.v2/internal/json
 gopkg.in/mgo.v2/internal/sasl
 gopkg.in/mgo.v2/internal/scram
+# gopkg.in/yaml.v2 v2.2.4
+gopkg.in/yaml.v2
