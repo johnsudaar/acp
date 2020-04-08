@@ -15,14 +15,15 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Port int
+	Port       int
+	AssetsPath string
 }
 
 type DatabaseConfig struct {
 	URL string
 }
 
-func getViperConfig() *viper.Viper {
+func GetViperConfig() *viper.Viper {
 	v := viper.New()
 	v.SetConfigType("yaml")
 	v.SetConfigName("acp.yml")
@@ -34,12 +35,15 @@ func getViperConfig() *viper.Viper {
 
 	v.SetDefault("server.port", "8081")
 	v.BindEnv("server.port")
+	v.SetDefault("server.assets_path", "/var/lib/acp/front")
+	v.BindEnv("server.assets_path")
+
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	return v
 }
 
 func Init() error {
-	v := getViperConfig()
+	v := GetViperConfig()
 	err := v.ReadInConfig()
 	// If the error is not a file not found error: ignore
 	if err != nil {

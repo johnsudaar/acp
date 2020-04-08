@@ -58,5 +58,5 @@ func Ping(resp http.ResponseWriter, req *http.Request, params map[string]string)
 }
 
 func Front(resp http.ResponseWriter, req *http.Request) {
-	http.FileServer(http.Dir("public/")).ServeHTTP(resp, req)
+	http.FileServer(http.Dir(config.Get().Server.AssetsPath)).ServeHTTP(resp, req)
 }

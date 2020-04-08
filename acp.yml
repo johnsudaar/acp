@@ -1,0 +1,5 @@
+database:
+  url: mongodb://localhost:2701
+server:
+  assets_path: /var/lib/acp/front
+  port: "8081"
