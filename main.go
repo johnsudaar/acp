@@ -44,7 +44,9 @@ func main() {
 func StartServer() {
 	// ------------ Initialization -------------------
 	// Load App config
-	err := config.Init()
+	err := config.Init(config.ConfigOpts{
+		Version: Version,
+	})
 	if err != nil {
 		panic(errors.Wrap(err, "fail to init config"))
 	}

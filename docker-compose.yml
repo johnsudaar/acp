@@ -13,7 +13,7 @@ services:
       - 9091:9091
     links:
       - mongo
-    command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp'
+    command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp start'
   mongo:
     image: mongo
     volumes:

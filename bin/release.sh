@@ -55,12 +55,13 @@ go get -u github.com/mitchellh/gox
 echo "[+] Back: go mod vendor"
 go mod vendor | ident
 echo "[+] Back: Building"
-gox -os="linux" -arch="amd64 386 arm" -output="dist/acp-$VERSION-{{.OS}}-{{.Arch}}/acp" -ldflags="-X main.Version=$VERSION" .
+gox -os="linux" -arch="amd64 386 arm" -output="dist/acp-v$VERSION-{{.OS}}-{{.Arch}}/acp" -ldflags="-X main.Version=$VERSION" .
 pushd dist > /dev/null
 
 for dir in * ; do
   echo "[+] Packaging front for $dir"
   cp -R $build_dir/acp-front-$VERSION/dist $dir/public
+  cp -R $BASE_DIR/assets $dir
   zip -r $dir.zip $dir > /dev/null
   cp $dir.zip $BASE_DIR/dist/
 done

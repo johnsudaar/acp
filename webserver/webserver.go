@@ -10,6 +10,7 @@ import (
 	muxhandlers "github.com/gorilla/handlers"
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/graph"
+	"github.com/johnsudaar/acp/upgrade"
 	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
 )
@@ -24,6 +25,7 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	deviceTypesController := NewDeviceTypesController()
 	linkController := NewLinkController(graph)
 	router.HandleFunc("/api/ping", Ping).Methods("GET")
+	router.HandleFunc("/api/version", Version).Methods("GET")
 	router.HandleFunc("/api/devices", deviceController.List).Methods("GET")
 	router.HandleFunc("/api/devices", deviceController.Create).Methods("POST")
 	router.HandleFunc("/api/devices/{id}", deviceController.Show).Methods("GET")
@@ -57,6 +59,20 @@ func Ping(resp http.ResponseWriter, req *http.Request, params map[string]string)
 	return nil
 }
 
+func Version(resp http.ResponseWriter, req *http.Request, params map[string]string) error {
+	newVersion, release, err := upgrade.NewVersionAvailable()
+	log := logger.Get(req.Context())
+	if err != nil {
+		log.WithError(err).Error("fail to find new version")
+	}
+	utils.JSON(req.Context(), resp, map[string]interface{}{
+		"version":          config.Get().Version,
+		"update_available": newVersion,
+		"next_release":     release,
+	})
+	return nil
+}
+
 func Front(resp http.ResponseWriter, req *http.Request) {
-	http.FileServer(http.Dir("public/")).ServeHTTP(resp, req)
+	http.FileServer(http.Dir(config.Get().PublicPath)).ServeHTTP(resp, req)
 }

@@ -1,0 +1,3 @@
+init,/etc/init.d/acp
+default,/etc/default/acp
+logrotate,/etc/logrotate.d/acp
