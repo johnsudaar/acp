@@ -3,7 +3,7 @@ class Redis < FPM::Cookery::Recipe
   source   'https://github.com/johnsudaar/acp/archive/master.tar.gz'
 
   name     'acp'
-  version  '0.0.1'
+  version  ENV['VERSION'] || 'dev'
   revision '1'
 
   description 'ACP Control Panel'
@@ -11,7 +11,7 @@ class Redis < FPM::Cookery::Recipe
   config_files '/etc/acp/acp.yml'
 
   def build
-    make
+    make 'VERSION' => ENV['VERSION'] || 'dev'
   end
 
   def install

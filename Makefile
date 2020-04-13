@@ -1,9 +1,13 @@
-.PHONY: all clean front config pkg-image pkd-debug
+ifndef VERSION
+override VERSION=dev
+endif
+
+.PHONY: all clean front config pkg-image pkd-debug pkg pkg-init
 
 all: server front config
 
 server:
-	go build .
+	go build -ldflags="-X main.Version=$(VERSION)" .
 
 front:
 	cd front; yarn install; yarn build
@@ -29,3 +33,9 @@ pkg-image:
 
 pkg-debug: pkg-image
 	docker run -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm -it acp_package_eng bash
+
+pkg-init: pkg-image
+	docker run -e VERSION=$(VERSION) -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm acp_package_eng bash -c 'bundle install'
+
+pkg: pkg-init
+	docker run -e VERSION=$(VERSION) -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm acp_package_eng bash -c 'bundle exec rake build'
