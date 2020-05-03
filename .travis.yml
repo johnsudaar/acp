@@ -3,12 +3,13 @@ language: minimal
 arch:
   - amd64
   - arm64
-  - armhf
+  - arm
 
 services:
   - docker
 
 install:
+  - dpkg --print-architecture
   - make pkg-init
 
 deploy:
