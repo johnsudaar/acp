@@ -16,7 +16,7 @@ type Config struct {
 
 type ServerConfig struct {
 	Port       int
-	AssetsPath string
+	AssetsPath string `mapstructure:"assets_path"`
 }
 
 type DatabaseConfig struct {
