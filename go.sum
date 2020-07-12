@@ -6,6 +6,8 @@ github.com/Scalingo/go-handlers v1.2.4 h1:w228bn4su59eJ3cn1GlRF0TEtKPfuK2NQzE29L
 github.com/Scalingo/go-handlers v1.2.4/go.mod h1:k41KnxUXCW2uhdSwcdSqbwcB8MnilFokx31HqR56k3E=
 github.com/Scalingo/go-utils v5.6.1+incompatible h1:EKEAphFrY80H7Sgez+4QUny80dk1YJ4kj47sinUL30I=
 github.com/Scalingo/go-utils v5.6.1+incompatible/go.mod h1:YcispJL9BCnNJwWxspalrRQ6zHAYPyNSnDLlfdfhxt8=
+github.com/Scalingo/go-utils v7.0.1+incompatible h1:m3++P4W99MSqzsb3pNQDyhAHOM+Z00hQvHr4P/5njRc=
+github.com/Scalingo/go-utils v7.0.1+incompatible/go.mod h1:YcispJL9BCnNJwWxspalrRQ6zHAYPyNSnDLlfdfhxt8=
 github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72 h1:iwKSQsR/UQXZWR2Dv+yBxlIQ3lQ2kcW1nnGznkF8NVk=
 github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72/go.mod h1:EtbZVlQ19QDh9w5b4e/R1i4Cn52dQO5545lPXIqzApw=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=

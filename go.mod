@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/Scalingo/go-handlers v1.2.4
-	github.com/Scalingo/go-utils v5.6.1+incompatible
+	github.com/Scalingo/go-utils v7.0.1+incompatible
 	github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
