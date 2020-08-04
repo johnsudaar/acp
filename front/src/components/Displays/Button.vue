@@ -23,6 +23,12 @@ export default {
   methods: {
     clicked() {
       this.$emit("click")
+    },
+    mouseup() {
+      this.$emit("mouseup")
+    },
+    mousedown() {
+      this.$emit("mousedown")
     }
   }
 }
@@ -113,7 +119,7 @@ export default {
 </style>
 
 <template>
-  <div class="atem btn" v-bind:class="{big}" @click="clicked()">
+  <div class="atem btn" v-bind:class="{big}" @click="clicked()" @mousedown="mousedown()" @mouseup="mouseup()">
     <div v-bind:class="btnClass" class="btn-shadow" />
     <div v-bind:class="btnClass" class="btn">
       <div class="label">

@@ -64,6 +64,7 @@ body {
         <navigation-link title="Rec control" icon="camera" path="/rec/control"/>
         <navigation-link title="PTZ Control" icon="gamepad" path="/cam/control"/>
         <navigation-link title="Cockpit" icon="gamepad" path="/cockpit"/>
+        <navigation-link title="Intercom" icon="mic" path="/intercom"/>
         <v-spacer/>
         <navigation-link title="Configuration" icon="settings" path="/config" />
       </v-list>

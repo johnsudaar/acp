@@ -60,7 +60,6 @@ Vue.component('device-jvc-remote', DeviceJVCRemote)
 Vue.component('device-tally-rec', DeviceTallyRecorder)
 
 // Remote
-
 import JVCRemoteInput from './components/Remote/JVCInput.vue'
 Vue.component('jvc-remote-input', JVCRemoteInput)
 
@@ -90,6 +89,11 @@ Vue.component('ptz-delete-position', PtzDeletePosition)
 Vue.component('ptz-positions', PtzPositions)
 Vue.component('ptz-edit', PtzEdit)
 Vue.component('ptz-form', PtzForm)
+
+// Intercom
+import IntercomForm from './components/Intercom/Form.vue'
+
+Vue.component('intercom-form', IntercomForm)
 
 // Switcher
 import Switcher from './components/Switcher/Switcher.vue'

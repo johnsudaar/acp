@@ -10,6 +10,7 @@ import (
 	tally "github.com/johnsudaar/acp/devices/drivers/tally_rasp"
 	"github.com/johnsudaar/acp/devices/drivers/tallybox"
 	"github.com/johnsudaar/acp/devices/drivers/tallyrecorder"
+	"github.com/johnsudaar/acp/devices/drivers/x32"
 )
 
 func LoadDrivers() {
@@ -21,4 +22,5 @@ func LoadDrivers() {
 	devices.RegisterType("SMARTVIEW_DUO", smartview.NewLoader())
 	devices.RegisterType("TALLY_BOX", tallybox.NewLoader())
 	devices.RegisterType("HS_50", hs50.NewLoader())
+	devices.RegisterType("X32", x32.NewLoader())
 }
