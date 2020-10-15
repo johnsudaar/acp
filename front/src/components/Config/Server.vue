@@ -61,8 +61,8 @@ export default {
       <v-layout row wrap>
         <v-flex xs12 md6>
           <v-text-field
-            label="IP"
-            v-validate="'required|ip'"
+            label="Host"
+            v-validate="'required'"
             data-vv-name="ip"
             :error-messages="errors.collect('ip')"
             v-model="ip"
@@ -83,7 +83,7 @@ export default {
         </v-flex>
         <v-flex xs12 md2>
           <v-spacer />
-          <v-btn large :disabled="loading" :loading="loading" @click="connect">Connect</v-btn>
+          <v-btn large :disabled="loading" :loading="loading" @click="connect" type="submit">Connect</v-btn>
         </v-flex>
         <v-alert :value="success" dismissible type="success" transition="scale-transition">
           Successfully connected to server.

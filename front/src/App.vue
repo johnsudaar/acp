@@ -14,6 +14,16 @@ export default {
     ...mapState('devices', ['devices']),
   },
   created() {
+    let location = new URL(window.location.href)
+    let ip = localStorage.getItem('config/serverEndpoint/ip')
+    let port = localStorage.getItem('config/serverEndpoint/port')
+    // If the IP or the port does not exist, store try to autoguess them
+    if(!ip) {
+      localStorage.setItem('config/serverEndpoint/ip', location.hostname)
+    }
+    if(!port) {
+      localStorage.setItem('config/serverEndpoint/port', location.port || "80")
+    }
     // Load configuration from localStorage
     this.$store.dispatch('config/load')
   },
