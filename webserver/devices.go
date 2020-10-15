@@ -212,6 +212,22 @@ func (c DeviceController) Destroy(resp http.ResponseWriter, req *http.Request, p
 		return errors.Wrap(err, "fail to find device")
 	}
 
+	var links []models.Link
+	err = document.Where(ctx, models.LinkCollection, bson.M{}, &links)
+	if err != nil {
+		return errors.Wrap(err, "fail to get links")
+	}
+
+	for _, link := range links {
+		if link.Input.DeviceID == id.Hex() || link.Output.DeviceID == id.Hex() {
+			c.graph.Disconnect(ctx, link.Input, link.Output)
+			err := document.ReallyDestroy(ctx, models.LinkCollection, &link)
+			if err != nil {
+				return errors.Wrap(err, "fail to delete link")
+			}
+		}
+	}
+
 	err = c.graph.Remove(ctx, dev.ID.Hex())
 	if err != nil {
 		return errors.Wrap(err, "fail to remove device from graph")

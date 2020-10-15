@@ -1,10 +1,12 @@
 package atem
 
 import (
+	"context"
 	"net"
 	"sync"
 	"time"
 
+	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/devices/types"
 	"github.com/johnsudaar/atem"
@@ -33,9 +35,10 @@ func (a *ATEM) connect() {
 	if a.client != nil {
 		a.client.Close()
 	}
+	ctx := logger.ToCtx(context.Background(), a.log)
 
 	a.log.Info("Trying to connect")
-	client, err := atem.New(
+	client, err := atem.New(ctx,
 		net.JoinHostPort(a.IP, a.Port),
 		atem.WithTallyWriter(a),
 	)
