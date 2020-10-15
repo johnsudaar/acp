@@ -11,6 +11,7 @@ import (
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/devices/drivers"
 	"github.com/johnsudaar/acp/graph"
+	"github.com/johnsudaar/acp/realtime"
 	"github.com/johnsudaar/acp/tests/proxy"
 	"github.com/johnsudaar/acp/webserver"
 	"github.com/pkg/errors"
@@ -56,8 +57,14 @@ func StartServer() {
 	drivers.LoadDrivers()
 	log.Info("Drivers initialized")
 
+	// Init centrifuge
+	realtime, err := realtime.Start(ctx)
+	if err != nil {
+		panic(err)
+	}
+
 	// Load current graph
-	graph, err := graph.Load(ctx)
+	graph, err := graph.Load(ctx, realtime)
 	if err != nil {
 		panic(err)
 	}
@@ -68,9 +75,8 @@ func StartServer() {
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
 	go proxy.Start()
-	err = webserver.Start(ctx, graph)
+	err = webserver.Start(ctx, graph, realtime)
 	if err != nil {
 		panic(err)
 	}
-
 }

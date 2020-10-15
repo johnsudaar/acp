@@ -14,19 +14,21 @@ const mutations = {
   setServerEndpoint(state, {ip, port}) {
     state.ip = ip
     state.port = port
-    state.connected = false
     state.apiClient = null
   },
 
   setClient(state, client) {
     state.apiClient = client
-    state.connected = client !== null
   },
 
   setVersion(state, {version, updateAvailable, nextRelease}) {
     state.version = version
     state.updateAvailable = updateAvailable
     state.nextRelease = nextRelease
+  },
+
+  setConnected(state, connected) {
+    state.connected = connected
   },
 }
 
@@ -67,8 +69,16 @@ const actions = {
   connected(context, client) {
     context.commit('setClient', client)
     if(client != null) {
-      context.dispatch('devices/refresh', null, {root: true})
-      context.dispatch('loadServerVersion')
+      client.realtime.on('connect', function() {
+        context.commit('setConnected', true)
+        context.dispatch('devices/refresh', null, {root: true})
+        context.dispatch('loadServerVersion')
+      })
+      client.realtime.on('disconnect', function() {
+        console.log('disconnect')
+        context.commit('setConnected', false)
+      })
+      client.realtime.connect()
     }
   }
 }

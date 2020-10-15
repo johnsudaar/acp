@@ -7,12 +7,12 @@ const state = {
 const mutations = {
   addDevice(state, device) {
     state.devices.push(device)
-
   },
+
   setDevices(state, devices) {
     state.devices = devices
-
   },
+
   removeDevice(state, id) {
     // First find the index of this device
     let i = state.devices.map(device => device.id).indexOf(id)

@@ -4,6 +4,7 @@ import TallyRecorderClient from './tally_recorder'
 import JVCClient from './jvc'
 import PTZClient from './ptz'
 import SwitcherClient from './switcher'
+import RealtimeClient from './realtime'
 import {cleanError} from './utils'
 import axios from 'axios'
 
@@ -30,6 +31,9 @@ export default class Client {
 
     // Init the Switcher client
     this.switcher = new SwitcherClient(this._url)
+
+    // Init the realtime client
+    this.realtime = new RealtimeClient(ip, port)
   }
 
   // Ping method: used to check connection between the client and the API server

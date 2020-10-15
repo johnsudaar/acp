@@ -30,7 +30,7 @@ func GetViperConfig() *viper.Viper {
 	v.AddConfigPath("$HOME/.config/acp")
 	v.AddConfigPath("/etc/acp")
 
-	v.SetDefault("database.url", "mongodb://localhost:2701")
+	v.SetDefault("database.url", "mongodb://localhost:27017")
 	v.BindEnv("database.url")
 
 	v.SetDefault("server.port", "8081")

@@ -10,11 +10,12 @@ import (
 	muxhandlers "github.com/gorilla/handlers"
 	"github.com/johnsudaar/acp/config"
 	"github.com/johnsudaar/acp/graph"
+	"github.com/johnsudaar/acp/realtime"
 	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
 )
 
-func Start(ctx context.Context, graph graph.Graph) error {
+func Start(ctx context.Context, graph graph.Graph, realtime realtime.Realtime) error {
 	log := logger.Get(ctx).WithField("source", "http_server")
 	config := config.Get()
 
@@ -41,8 +42,13 @@ func Start(ctx context.Context, graph graph.Graph) error {
 	originsOk := muxhandlers.AllowedOrigins([]string{"*"})
 	methodsOk := muxhandlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"})
 
+	http.HandleFunc("/connection/websocket/", realtime.Websocket)
+	http.HandleFunc("/connection/sockjs/", realtime.SockJS)
+	http.Handle("/", muxhandlers.CORS(originsOk, headersOk, methodsOk)(router))
+
 	log.WithField("port", config.Server.Port).Info("Starting web server")
-	err := http.ListenAndServe(fmt.Sprintf(":%v", config.Server.Port), muxhandlers.CORS(originsOk, headersOk, methodsOk)(router))
+
+	err := http.ListenAndServe(fmt.Sprintf(":%v", config.Server.Port), nil)
 	if err != nil {
 		return errors.Wrap(err, "HTTP server failed")
 	}

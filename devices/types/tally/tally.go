@@ -8,6 +8,7 @@ import (
 	handlers "github.com/Scalingo/go-handlers"
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/realtime"
 )
 
 type Value string
@@ -25,6 +26,7 @@ var _ types.DeviceType = &TallyDriver{}
 type Tallyable interface {
 	OutputPorts() []string
 	SendTally(ctx context.Context, port string, value Value)
+	PublishRealtimeEvent(ctx context.Context, ch realtime.Channel, data interface{})
 }
 
 type TallyDriver struct {
@@ -97,6 +99,10 @@ func (t *TallyDriver) refreshAllTallies(ctx context.Context) {
 			value = Off
 		}
 		go t.device.SendTally(ctx, port, value)
+		go t.device.PublishRealtimeEvent(ctx, realtime.TallyChannel, realtime.TallyEvent{
+			Program: value == Program,
+			Preview: value == Preview,
+		})
 	}
 }
 

@@ -7,6 +7,7 @@ import (
 	"github.com/Scalingo/go-utils/mongo/document"
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/models"
+	"github.com/johnsudaar/acp/realtime"
 	"github.com/pkg/errors"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -18,6 +19,7 @@ var (
 type deviceGraph struct {
 	devicesLock *sync.RWMutex
 	devices     []devices.Device
+	realtime    realtime.Realtime
 
 	linksLock *sync.RWMutex
 	links     map[models.Port][]models.Port
@@ -60,7 +62,7 @@ func (d *deviceGraph) Add(ctx context.Context, id string) (devices.Device, error
 	}
 
 	// Import the generic device
-	genericDevice := devices.Import(deviceModel, d)
+	genericDevice := devices.Import(deviceModel, d, d.realtime)
 
 	// Find the correct loader for this device
 	loader, err := devices.GetLoader(deviceModel.Type)

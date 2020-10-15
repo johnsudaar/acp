@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <group v-for="(device) in ptzDevices" :key="device.id" :title="device.name" class="col-12 mt-3" fill-width>
+    <group v-for="(device) in ptzDevices" :key="device.id" :title="device.name" class="col-12 mt-3" fill-width v-bind:class="tallyClass(device.id)">
       <v-layout row>
         <ptz-positions :device="device" />
         <v-spacer/>
@@ -17,7 +17,9 @@
 </template>
 
 <script>
+import TallyMixin from '@/mixins/tally'
 export default {
+  mixins: [TallyMixin],
   data() {
     return {
       fab: false,
@@ -37,7 +39,27 @@ export default {
       }).sort((a, b) => {
         return a.name > b.name ? 1 : -1
       })
+    },
+  },
+  methods: {
+    tallyClass(deviceId) {
+      if(this.isPreview(deviceId)) {
+        return 'tally-pvw'
+      }
+      if(this.isProgram(deviceId)) {
+        return 'tally-pgm'
+      }
     }
   }
 }
 </script>
+
+<style scoped>
+.tally-pgm {
+  background-color: #ff000030;
+}
+
+.tally-pvw {
+  background-color: #00ff0030;
+}
+</style>

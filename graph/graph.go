@@ -8,6 +8,7 @@ import (
 	"github.com/Scalingo/go-utils/mongo/document"
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/models"
+	"github.com/johnsudaar/acp/realtime"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2/bson"
@@ -26,11 +27,12 @@ type Graph interface {
 	Disconnect(ctx context.Context, input models.Port, output models.Port)
 }
 
-func Load(ctx context.Context) (Graph, error) {
+func Load(ctx context.Context, realtime realtime.Realtime) (Graph, error) {
 	log := logger.Get(ctx)
 	graph := &deviceGraph{
 		devices:     []devices.Device{},
 		devicesLock: &sync.RWMutex{},
+		realtime:    realtime,
 
 		links:     make(map[models.Port][]models.Port),
 		linksLock: &sync.RWMutex{},
