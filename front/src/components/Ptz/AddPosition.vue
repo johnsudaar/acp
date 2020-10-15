@@ -2,7 +2,7 @@
   <v-dialog
     :value="open"
     width="500"
-    persistent="true"
+    :persistent="true"
     >
     <v-card>
       <v-card-title
