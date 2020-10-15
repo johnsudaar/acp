@@ -1,6 +1,6 @@
 <template>
   <v-layout fill-height align-center justify-center>
-    <v-layout column v-if="$store.state.config.connected" fill-height>
+    <v-layout column fill-height>
       <group title="Tools" fill-width>
         <v-layout>
           <network-add-device v-on:add-device="addDevice"/>
@@ -11,7 +11,6 @@
       <div id="graph_container">
       </div>
     </v-layout>
-    <loading v-else/>
 
     <v-dialog
       v-model="openErrorModal"

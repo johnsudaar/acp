@@ -77,9 +77,14 @@ body {
       <clock/>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
-        <router-view> </router-view>
-      </v-container>
+      <v-layout column v-if="$store.state.config.connected || $route.meta.offline" fill-height>
+        <v-container fluid fill-height>
+          <router-view> </router-view>
+        </v-container>
+      </v-layout>
+      <v-layout fill-height align-center justify-center v-else>
+        <loading />
+      </v-layout>
     </v-content>
     <v-footer app fixed>
     </v-footer>

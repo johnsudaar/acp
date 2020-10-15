@@ -17,7 +17,7 @@ const routes = [
   { path: '/cam/control', component: CamControl },
   { path: '/rec/control', component: RecControl },
   { path: '/cockpit', component: Cockpit },
-  { path: '/config', component: Config },
+  { path: '/config', component: Config, meta: { offline: true }},
   { path: "/", component: Network }
 ]
 
