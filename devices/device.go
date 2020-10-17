@@ -2,6 +2,7 @@ package devices
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/johnsudaar/acp/devices/types"
@@ -20,6 +21,10 @@ type EventWriter interface {
 	SendEvent(ctx context.Context, from models.Port, name string, data interface{})
 }
 
+type RealtimeEventWriter interface {
+	Publish(ch string, from string, payload interface{}) error
+}
+
 type Device interface {
 	ID() bson.ObjectId
 	Name() string
@@ -33,5 +38,6 @@ type Device interface {
 	Stop() error
 
 	WriteEvent(ctx context.Context, toPort string, name string, data interface{})
+	WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage)
 	Types() []types.Type
 }

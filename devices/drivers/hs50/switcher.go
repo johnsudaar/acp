@@ -2,6 +2,7 @@ package hs50
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/a-contre-plongee/hs50/client"
 	"github.com/johnsudaar/acp/devices"
@@ -79,4 +80,7 @@ func (s *Switcher) Switch(output, input string) error {
 		return errors.Wrap(err, "fail to switch bus")
 	}
 	return nil
+}
+
+func (s *Switcher) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }

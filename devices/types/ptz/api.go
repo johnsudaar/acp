@@ -2,6 +2,7 @@ package ptz
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/Scalingo/go-utils/logger"
@@ -20,37 +21,19 @@ func (p *PtzDriver) Joystick(resp http.ResponseWriter, req *http.Request, params
 		return nil
 	}
 
-	var payload PTZJoystickParams
-	err := json.NewDecoder(req.Body).Decode(&payload)
+	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		utils.Err(ctx, resp, http.StatusBadRequest, "invalid json: "+err.Error())
+		utils.Err(ctx, resp, http.StatusInternalServerError, "invalid json: "+err.Error())
+		log.WithError(err).Error("Fail to send PTZ")
 		return nil
-	}
-	if payload.PanSpeed > 1 {
-		payload.PanSpeed = 1
-	}
-	if payload.PanSpeed < -1 {
-		payload.PanSpeed = -1
-	}
-	if payload.TiltSpeed > 1 {
-		payload.TiltSpeed = 1
-	}
-	if payload.TiltSpeed < -1 {
-		payload.TiltSpeed = -1
-	}
-	if payload.ZoomSpeed > 1 {
-		payload.ZoomSpeed = 1
-	}
-	if payload.ZoomSpeed < -1 {
-		payload.ZoomSpeed = -1
 	}
 
-	err = p.device.SendPTZJoystick(payload)
+	err = p.JoystickAction(body)
 	if err != nil {
-		log.WithError(err).Error("Fail to send PTZ")
-		utils.Err(ctx, resp, http.StatusInternalServerError, err.Error())
+		utils.Err(ctx, resp, http.StatusInternalServerError, "invalid json: "+err.Error())
 		return nil
 	}
+
 	resp.Write([]byte(`{"status": "success"}`))
 	return nil
 }

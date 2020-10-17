@@ -51,7 +51,7 @@ export default {
         let gamepad = gamepads[i];
         if(gamepad !== null) {
           let controller = this.controllers[i]
-          if(controller=== null) {
+          if(controller === null) {
             console.log("NEW")
             this.controllers[i] = new XBoxController()
             controller = this.controllers[i]

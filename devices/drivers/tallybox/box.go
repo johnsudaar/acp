@@ -2,6 +2,7 @@ package tallybox
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/johnsudaar/acp/devices"
@@ -50,4 +51,7 @@ func (t *tallybox) WriteEvent(ctx context.Context, toPort string, name string, d
 
 func (t *tallybox) Types() []types.Type {
 	return []types.Type{types.TallyType}
+}
+
+func (t *tallybox) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }

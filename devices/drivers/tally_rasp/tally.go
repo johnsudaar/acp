@@ -102,3 +102,6 @@ func (t *Tally) toTallyString(value tally.Value) string {
 
 	return "off"
 }
+
+func (t *Tally) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
+}

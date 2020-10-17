@@ -23,12 +23,16 @@ export default {
     return {
       camId: null,
       timer: null,
+      isSending: false,
+      wasMoving: false,
+      resetSendingTimeout: 0,
+      lastSendAt: null,
       leftHandedMode: false,
       lastPayload: null,
     }
   },
   mounted() {
-    this.timer = setInterval(this.sendValues, 250)
+    this.timer = setInterval(this.sendValues, 50)
   },
   beforeDestroy() {
     clearInterval(this.timer)
@@ -44,6 +48,9 @@ export default {
     onSelect(id) {
       this.camId = id
     },
+    resetSending() {
+      this.isSending = false
+    },
     async sendValues() {
       if(!this.camId) {
         return
@@ -52,9 +59,28 @@ export default {
       if(!this.pad) {
         return
       }
+
+      let camX = this.pad.cam.x;
+      let camY = this.pad.cam.y;
+      let isMoving = false;
+
+      camY *= 2/3;
+
+      if(camX != 0 || camY != 0) {
+        isMoving = true;
+      }
+
+      if(this.isSending && isMoving == this.wasMoving) {
+        return
+      }
+      this.isSending = true
+      clearTimeout(this.resetSendingTimeout)
+      this.resetSendingTimeout = setTimeout(this.resetSending, 300)
+      this.wasMoving = isMoving;
+
       let payload = {
-        pan: this.pad.cam.x,
-        tilt: this.pad.cam.y,
+        pan: camX,
+        tilt: camY,
         zoom: this.pad.zoom,
         focus: this.pad.focus,
         buttons: this.pad.buttons,
@@ -63,9 +89,9 @@ export default {
         return
       }
 
-        this.lastPayload = payload
+      this.lastPayload = payload
       try {
-        await this.$store.state.config.apiClient.ptz.joystick(this.camId, payload)
+        await this.$store.state.config.apiClient.realtime.ptzJoystick(this.camId, payload)
         this.lastPayload = payload
       } catch(e) {
         console.error(e)

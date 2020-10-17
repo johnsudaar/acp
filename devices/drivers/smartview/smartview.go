@@ -2,6 +2,7 @@ package smartview
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net"
 
@@ -90,4 +91,7 @@ func (t *SmartView) toTallyString(value tally.Value) string {
 		return "GREEN"
 	}
 	return "NONE"
+}
+
+func (t *SmartView) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }

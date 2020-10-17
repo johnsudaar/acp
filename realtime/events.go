@@ -6,24 +6,25 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Channel string
-
-const (
-	TallyChannel Channel = "tally"
-)
-
 type RealtimeEvent struct {
 	SenderID string      `json:"sender_id"`
 	Data     interface{} `json:"data"`
 }
 
-type TallyEvent struct {
-	Program bool `json:"program"`
-	Preview bool `json:"preview"`
+type UserEvent struct {
+	DeviceID string          `json:"device_id"`
+	Data     json.RawMessage `json:"data"`
 }
 
-func (r *RealtimeServer) Publish(ch Channel, payload RealtimeEvent) error {
-	payloadBytes, err := json.Marshal(payload)
+func (r *RealtimeServer) Publish(ch string, from string, data interface{}) error {
+	if r.node == nil {
+		return nil
+	}
+	event := RealtimeEvent{
+		SenderID: from,
+		Data:     data,
+	}
+	payloadBytes, err := json.Marshal(event)
 	if err != nil {
 		return errors.Wrap(err, "fail to marshal event")
 	}

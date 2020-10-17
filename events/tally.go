@@ -15,3 +15,10 @@ type TalliesEvent struct {
 	Program []string
 	Preview []string
 }
+
+const TallyChannel = "tally"
+
+type RealtimeTallyEvent struct {
+	Program bool `json:"program"`
+	Preview bool `json:"preview"`
+}

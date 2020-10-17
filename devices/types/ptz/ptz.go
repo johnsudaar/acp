@@ -2,9 +2,12 @@ package ptz
 
 import (
 	"context"
+	"encoding/json"
 
 	handlers "github.com/Scalingo/go-handlers"
+	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/events"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -63,7 +66,22 @@ func (p *PtzDriver) EventSubscriptions() []string {
 	return []string{}
 }
 
+func (p *PtzDriver) RealtimeEventSubscriptions() []string {
+	return []string{events.PTZChannel}
+}
+
 func (p *PtzDriver) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
+}
+func (p *PtzDriver) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
+	log := logger.Get(ctx)
+	if channel != events.PTZChannel {
+		return
+	}
+
+	err := p.JoystickAction(payload)
+	if err != nil {
+		log.WithError(err).Error("Fail to perform PTZ action")
+	}
 }
 
 func (p *PtzDriver) Routes() map[string]handlers.HandlerFunc {

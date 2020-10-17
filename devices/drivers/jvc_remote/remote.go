@@ -2,6 +2,7 @@ package remote
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/johnsudaar/acp/devices"
@@ -35,6 +36,9 @@ func (r *Remote) Stop() error {
 }
 
 func (r *Remote) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
+}
+
+func (s *Remote) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }
 
 func (r *Remote) Types() []types.Type {

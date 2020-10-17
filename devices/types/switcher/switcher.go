@@ -39,7 +39,14 @@ func (p *SwitcherDriver) EventSubscriptions() []string {
 	return []string{}
 }
 
+func (p *SwitcherDriver) RealtimeEventSubscriptions() []string {
+	return []string{}
+}
+
 func (p *SwitcherDriver) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {
+}
+
+func (p *SwitcherDriver) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }
 
 func (s *SwitcherDriver) Routes() map[string]handlers.HandlerFunc {

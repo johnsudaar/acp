@@ -2,6 +2,7 @@ package devices
 
 import (
 	"context"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"sync"
@@ -148,6 +149,20 @@ func (d *DeviceWrapper) WriteEvent(ctx context.Context, toPort string, name stri
 
 	}
 	d.Implementation.WriteEvent(ctx, toPort, name, data)
+}
+
+func (d *DeviceWrapper) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
+	d.TypesLock.RLock()
+	defer d.TypesLock.RUnlock()
+
+	for typeName, t := range d.DeviceTypes {
+		if utils.HasString(channel, t.RealtimeEventSubscriptions()) {
+			ctx := logger.ToCtx(ctx, logger.Get(ctx).WithField("device_type", typeName))
+			t.WriteRealtimeEvent(ctx, channel, payload)
+		}
+	}
+
+	d.Implementation.WriteRealtimeEvent(ctx, channel, payload)
 }
 
 func (d *DeviceWrapper) Types() []types.Type {

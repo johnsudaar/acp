@@ -58,10 +58,7 @@ func StartServer() {
 	log.Info("Drivers initialized")
 
 	// Init centrifuge
-	realtime, err := realtime.Start(ctx)
-	if err != nil {
-		panic(err)
-	}
+	realtime := realtime.New()
 
 	// Load current graph
 	graph, err := graph.Load(ctx, realtime)
@@ -69,6 +66,11 @@ func StartServer() {
 		panic(err)
 	}
 	log.Info("Graph loaded")
+
+	err = realtime.Start(ctx, graph)
+	if err != nil {
+		panic(err)
+	}
 
 	log.Info("Init phase done.")
 

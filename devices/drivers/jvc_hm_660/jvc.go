@@ -2,6 +2,7 @@ package jvc
 
 import (
 	"context"
+	"encoding/json"
 	"sync"
 	"time"
 
@@ -74,6 +75,9 @@ func (j *JVCHM660) Types() []types.Type {
 	return []types.Type{types.TallyType, types.PTZType}
 }
 func (j *JVCHM660) WriteEvent(ctx context.Context, toPort, name string, data interface{}) {
+}
+
+func (s *JVCHM660) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }
 
 func (j *JVCHM660) watchDog() {

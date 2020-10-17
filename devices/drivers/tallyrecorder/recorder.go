@@ -2,6 +2,7 @@ package tallyrecorder
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"github.com/Scalingo/go-utils/mongo/document"
@@ -57,4 +58,7 @@ func (r *Recorder) WriteEvent(ctx context.Context, toPort, name string, data int
 			r.log.WithError(err).Error("fail to save tally event")
 		}
 	}
+}
+
+func (r *Recorder) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }

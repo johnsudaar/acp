@@ -5,7 +5,6 @@ import (
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/models"
-	"github.com/johnsudaar/acp/realtime"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -15,7 +14,7 @@ type Base struct {
 	deviceType  string
 	state       State
 	eventWriter EventWriter
-	realtime    realtime.Realtime
+	realtime    RealtimeEventWriter
 }
 
 func (b Base) ID() bson.ObjectId {
@@ -45,19 +44,15 @@ func (b *Base) SendEvent(ctx context.Context, from string, name string, data int
 	}, name, data)
 }
 
-func (b *Base) PublishRealtimeEvent(ctx context.Context, ch realtime.Channel, data interface{}) {
+func (b *Base) PublishRealtimeEvent(ctx context.Context, ch string, data interface{}) {
 	log := logger.Get(ctx)
-	event := realtime.RealtimeEvent{
-		SenderID: b.ID().Hex(),
-		Data:     data,
-	}
-	err := b.realtime.Publish(ch, event)
+	err := b.realtime.Publish(ch, b.ID().Hex(), data)
 	if err != nil {
 		log.WithError(err).Error("fail to send realtime event")
 	}
 }
 
-func Import(d models.Device, writer EventWriter, realtime realtime.Realtime) *Base {
+func Import(d models.Device, writer EventWriter, realtime RealtimeEventWriter) *Base {
 	return &Base{
 		id:          d.ID,
 		name:        d.Name,

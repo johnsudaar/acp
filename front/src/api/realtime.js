@@ -18,4 +18,11 @@ export default class RealtimeClient {
   subscribe(channel, cb) {
     return this._ws.subscribe(channel, cb)
   }
+
+  ptzJoystick(camId, params) {
+    this._ws.publish("ptz", {
+      device_id: camId,
+      data: params
+    })
+  }
 }

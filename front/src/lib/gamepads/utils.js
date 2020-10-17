@@ -1,20 +1,16 @@
 import {toPolar, toCarthesian} from '@/lib/maths/coordinates'
-export function normalizeAxis(axis, deadzone) {
-  let slowdown = 2;
-  return {
-    x: transform(axis.x),
-    y: transform(axis.y)
-  }
-  if(!deadzone) {
-    deadzone = 0.15
-  }
+export function normalizeAxis(axis, speed, deadzone) {
+  //return {
+  //  x: transform(axis.x),
+  //  y: transform(axis.y)
+  //}
   let p = toPolar(axis);
-  if(p.r < deadzone && false) {
+  if(p.r < deadzone) {
     p.r = 0;
   } else {
     //p.r = (p.r - deadzone) / (1 - deadzone)
-    p.r = Math.pow(p.r, 1)
-    p.r /= 5
+    p.r *= speed;
+    p.r = Math.pow(p.r, 1.5)
   }
   return toCarthesian(p)
 }

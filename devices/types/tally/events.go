@@ -2,6 +2,7 @@ package tally
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/events"
@@ -10,6 +11,10 @@ import (
 
 func (t *TallyDriver) EventSubscriptions() []string {
 	return []string{events.TallyEventName}
+}
+
+func (t *TallyDriver) RealtimeEventSubscriptions() []string {
+	return []string{}
 }
 
 func (t *TallyDriver) WriteEvent(ctx context.Context, toPort string, name string, data interface{}) {
@@ -41,4 +46,7 @@ func (t *TallyDriver) WriteEvent(ctx context.Context, toPort string, name string
 	t.values[toPort] = value
 	t.lock.Unlock()
 	t.refreshChan <- true
+}
+
+func (t *TallyDriver) WriteRealtimeEvent(ctx context.Context, channel string, payload json.RawMessage) {
 }
