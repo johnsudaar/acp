@@ -7,6 +7,12 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  mounted() {
+    this.updateFullscreen()
+  },
+  updated() {
+    this.updateFullscreen()
+  },
   props: {
     source: String,
   },
@@ -34,6 +40,11 @@ export default {
           return true
       }
       return false
+    },
+    updateFullscreen() {
+      if(this.$route.meta.fullscreen) {
+        this.$refs['fullscreen'].requestFullscreen();
+      }
     }
   },
   filters: deviceFilters,
@@ -49,6 +60,9 @@ export default {
 body {
   margin: 0;
 }
+html {
+  overflow-y: auto;
+}
 
 .fill-width {
   width: 100%;
@@ -57,36 +71,55 @@ body {
 .no-grow {
   flex-grow: 0;
 }
+
+.fullscreen {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+}
 </style>
 
 <template>
-  <v-app id="inspire" dark>
+  <div ref="fullscreen" class="fullscreen" v-if="$route.meta.fullscreen ">
+    <v-app>
+      <v-main>
+        <router-view v-if="$store.state.config.connected"/>
+      </v-main>
+    </v-app>
+  </div>
+  <v-app v-else>
     <v-navigation-drawer
       v-model="drawer"
       clipped
       fixed
       app
     >
-      <v-list dense>
+      <v-list dense >
         <navigation-link title="Network" icon="device_hub" path="/"/>
         <navigation-link v-for="(device) in devices" :icon="device.type | deviceTypeIcon" :title="device.name" :path="device.path()" v-if="showDevice(device)"/>
-        <navigation-link title="CCU" icon="camera" path="/ccu"/>
-        <navigation-link title="Rec control" icon="camera" path="/rec/control"/>
+        <!-- <navigation-link title="CCU" icon="camera" path="/ccu"/>
+        <navigation-link title="Rec control" icon="camera" path="/rec/control"/> -->
         <navigation-link title="PTZ Control" icon="gamepad" path="/cam/control"/>
         <navigation-link title="Cockpit" icon="gamepad" path="/cockpit"/>
+        <navigation-link title="Scenes" icon="tv" path="/scenes"/>
+        <navigation-link title="Timers" icon="schedule" path="/timers"/>
+        <navigation-link title="Program" icon="event_note" path="/programs"/>
         <v-spacer/>
         <navigation-link title="Configuration" icon="settings" path="/config" />
+        <navigation-link title="Screen" icon="tv" path="/scenes/_active"/>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    <v-app-bar
+      app
+      clipped-left>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>ACP Control Board</v-toolbar-title>
       <v-spacer/>
       <notifications class="mr-2"/>
       <server-status/>
       <clock/>
-    </v-toolbar>
-    <v-content>
+    </v-app-bar>
+    <v-main>
       <v-layout column v-if="$store.state.config.connected || $route.meta.offline" fill-height>
         <v-container fluid fill-height>
           <router-view> </router-view>
@@ -95,7 +128,7 @@ body {
       <v-layout fill-height align-center justify-center v-else>
         <loading />
       </v-layout>
-    </v-content>
+    </v-main>
     <v-footer app fixed>
     </v-footer>
   </v-app>

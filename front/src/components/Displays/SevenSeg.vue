@@ -15,11 +15,9 @@ export default {
 <style scoped>
 .seven-seg {
   background-color: black !important;
-  padding: 7px;
-  font-size: 20px;
   font-family: sevenSeg;
   border-radius: 3px;
-  width: fit-content;
+  width: 100%;
 }
 
 .seven-seg.red{
@@ -37,7 +35,7 @@ export default {
 </style>
 
 <template>
-  <div :class="['seven-seg', color]">
-    {{text}}
-  </div>
+  <svg viewBox="0 0 100 22" class="seven-seg">
+    <text text-anchor="middle" x="50%" y="18" fill="red">{{text}}</text>
+  </svg>
 </template>

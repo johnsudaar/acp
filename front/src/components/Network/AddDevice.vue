@@ -1,16 +1,18 @@
 <template>
   <div>
     <v-menu offset-y>
-      <v-btn slot="activator" color="primary" dark>
-      Add Device
-      </v-btn>
+      <template v-slot:activator="{ on }">
+        <v-btn v-on="on" color="primary" dark>
+          Add Device
+        </v-btn>
+      </template>
       <v-list>
-        <v-list-tile
+        <v-list-item
           v-for="(type) in $store.state.devices.types"
           @click="chooseDeviceType(type)"
         >
-          <v-list-tile-title>{{ type }}</v-list-tile-title>
-        </v-list-tile>
+          <v-list-item-title>{{ type }}</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
     <network-add-device-modal

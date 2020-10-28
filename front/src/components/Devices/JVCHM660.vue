@@ -1,6 +1,6 @@
 <template>
   <v-layout column fill-width>
-    <v-layout row class="no-grow" justify-center>
+    <v-layout class="no-grow" justify-center>
       <group title="Rec control">
         <v-layout align-end>
           <atem-btn class="mr-2" name="Rec"/>
@@ -32,7 +32,3 @@
     </v-layout>
   </v-layout>
 </template>
-
-<script>
-
-</script>

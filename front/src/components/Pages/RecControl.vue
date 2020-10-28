@@ -1,5 +1,5 @@
 <template>
-  <v-layout row fill-width>
+  <v-layout fill-width>
     <div v-for="(device) in recordingDevices" class="mr-2">
       <group :title="device.name">
         <rec-status :device-id="device.id"/>

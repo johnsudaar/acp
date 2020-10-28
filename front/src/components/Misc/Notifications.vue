@@ -1,12 +1,14 @@
 <template>
   <div class="text">
     <v-menu offset-y>
-      <v-badge left color="red" overlap slot="activator" :value="notificationCount != 0">
-        <span slot="badge">{{notificationCount}}</span>
-        <v-icon large>
-          notification_important
-        </v-icon>
-      </v-badge>
+      <template v-slot:activator="{ on, attrs }">
+        <v-badge left color="red" overlap :value="notificationCount != 0" v-on="on" v-bind="attrs">
+          <span slot="badge">{{notificationCount}}</span>
+          <v-icon large>
+            notification_important
+          </v-icon>
+        </v-badge>
+      </template>
       <v-list two-line>
         <v-list-tile v-if="$store.state.config.nextRelease">
           <v-list-tile-content>

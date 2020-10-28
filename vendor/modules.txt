@@ -11,6 +11,8 @@ github.com/Scalingo/go-utils/mongo
 github.com/Scalingo/go-utils/mongo/document
 # github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
 github.com/a-contre-plongee/hs50/client
+# github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
+github.com/a-contre-plongee/hyperdeck
 # github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
 # github.com/centrifugal/centrifuge v0.11.2
@@ -50,7 +52,7 @@ github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/gomodule/redigo v1.8.2
 github.com/gomodule/redigo/redis
-# github.com/google/uuid v1.1.1
+# github.com/google/uuid v1.1.2
 github.com/google/uuid
 # github.com/gorilla/context v1.1.1
 github.com/gorilla/context
@@ -131,7 +133,7 @@ github.com/subosito/gotenv
 github.com/urfave/cli
 # github.com/xinsnake/go-http-digest-auth-client v0.4.0
 github.com/xinsnake/go-http-digest-auth-client
-# golang.org/x/sys v0.0.0-20201015000850-e3ed0017c211
+# golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows

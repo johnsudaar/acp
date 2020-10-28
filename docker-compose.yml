@@ -11,6 +11,7 @@ services:
       - 8081:8081
       - 9090:9090
       - 9091:9091
+      - 9993:9993
     links:
       - mongo
     command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp start'

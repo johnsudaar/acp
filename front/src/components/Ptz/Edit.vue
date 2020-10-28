@@ -1,10 +1,12 @@
 <template>
   <div>
-    <v-btn @click="opened = !opened" fab flat>
-      <v-icon class="flex" v-if="opened">close</v-icon>
-      <v-icon class="flex" v-else>edit</v-icon>
-    </v-btn>
     <v-speed-dial v-model="opened" direction="left">
+      <template v-slot:activator>
+        <v-btn v-model="opened" fab text>
+          <v-icon class="flex" v-if="opened">close</v-icon>
+          <v-icon class="flex" v-else>edit</v-icon>
+        </v-btn>
+      </template>
       <v-btn fab color="green" small @click="add=true">
         <v-icon class="flex">add</v-icon>
       </v-btn>

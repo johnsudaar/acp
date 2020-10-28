@@ -3,7 +3,7 @@
     <div class="group-container">
       <v-layout column fill-height fluid>
         <v-flex xs8>
-          <v-layout row>
+          <v-layout>
             <v-flex xs4>
               <group title="Iris">
                 <center> 1.5 (manual) </center>
@@ -21,7 +21,7 @@
           </v-layout>
         </v-flex>
         <v-flex xs4 d-flex>
-          <v-layout row>
+          <v-layout>
             <v-flex xs4>
               <img src="http://wwp.acontreplongee.com/wp-content/uploads/2019/02/Structures.jpg"/>
             </v-flex>

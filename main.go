@@ -12,7 +12,9 @@ import (
 	"github.com/johnsudaar/acp/devices/drivers"
 	"github.com/johnsudaar/acp/graph"
 	"github.com/johnsudaar/acp/realtime"
+	"github.com/johnsudaar/acp/scenes"
 	"github.com/johnsudaar/acp/tests/proxy"
+	"github.com/johnsudaar/acp/timer"
 	"github.com/johnsudaar/acp/webserver"
 	"github.com/pkg/errors"
 )
@@ -67,6 +69,15 @@ func StartServer() {
 	}
 	log.Info("Graph loaded")
 
+	// Init scenes
+	scenes := scenes.New(realtime)
+
+	// Init timers
+	timers, err := timer.Load(ctx, realtime, graph)
+	if err != nil {
+		panic(err)
+	}
+
 	err = realtime.Start(ctx, graph)
 	if err != nil {
 		panic(err)
@@ -77,7 +88,7 @@ func StartServer() {
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
 	go proxy.Start()
-	err = webserver.Start(ctx, graph, realtime)
+	err = webserver.Start(ctx, graph, realtime, timers, scenes)
 	if err != nil {
 		panic(err)
 	}

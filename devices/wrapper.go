@@ -13,6 +13,7 @@ import (
 	"github.com/johnsudaar/acp/devices/types/ptz"
 	"github.com/johnsudaar/acp/devices/types/switcher"
 	"github.com/johnsudaar/acp/devices/types/tally"
+	"github.com/johnsudaar/acp/devices/types/timer"
 	"github.com/johnsudaar/acp/utils"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
@@ -49,6 +50,12 @@ func Wrap(d Device) (Device, error) {
 				return nil, errors.Wrapf(err, "fail to import device type %s", t)
 			}
 			deviceTypes[t] = switcher
+		case types.TimerType:
+			timer, err := timer.Import(d)
+			if err != nil {
+				return nil, errors.Wrapf(err, "fail to import device type %s", t)
+			}
+			deviceTypes[t] = timer
 		}
 
 	}

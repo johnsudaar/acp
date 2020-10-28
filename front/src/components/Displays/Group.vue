@@ -31,7 +31,7 @@ export default {
   width: fit-content;
   padding: 0 5px;
   margin-top: -15px;
-  background-color: #303030;
+  background-color: #121212;
   height: 20px;
 }
 

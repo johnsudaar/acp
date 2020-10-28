@@ -24,6 +24,7 @@ const (
 	TallyType    Type = "tally"
 	PTZType      Type = "ptz"
 	SwitcherType Type = "switcher"
+	TimerType    Type = "timer"
 )
 
 var (

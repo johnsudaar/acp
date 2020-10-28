@@ -5,6 +5,8 @@ import JVCClient from './jvc'
 import PTZClient from './ptz'
 import SwitcherClient from './switcher'
 import RealtimeClient from './realtime'
+import TimersClient from './timers'
+import ScenesClient from './scenes'
 import {cleanError} from './utils'
 import axios from 'axios'
 
@@ -34,6 +36,12 @@ export default class Client {
 
     // Init the realtime client
     this.realtime = new RealtimeClient(ip, port)
+
+    // Init the timers client
+    this.timers = new TimersClient(this._url)
+
+    // Init the scene client
+    this.scenes = new ScenesClient(this._url)
   }
 
   // Ping method: used to check connection between the client and the API server

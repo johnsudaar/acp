@@ -20,8 +20,8 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red darken-1" flat @click="$emit('close')">Close</v-btn>
-        <v-btn color="green darken-1" flat v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit()">Save</v-btn>
+        <v-btn color="red darken-1" text @click="$emit('close')">Close</v-btn>
+        <v-btn color="green darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

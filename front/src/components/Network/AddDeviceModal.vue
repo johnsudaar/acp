@@ -40,8 +40,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="$emit('close')">Close</v-btn>
-        <v-btn color="blue darken-1" flat v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="$emit('close')">Close</v-btn>
+        <v-btn color="blue darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -1,5 +1,5 @@
 <template>
-  <v-layout row>
+  <v-layout>
     <v-flex xs12 sm4 offset-sm2>
       <v-text-field
         label="IP"

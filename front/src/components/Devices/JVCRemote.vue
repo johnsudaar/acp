@@ -2,7 +2,7 @@
   <v-container>
     <v-form
       @submit="submitForm">
-      <v-layout row>
+      <v-layout>
         <v-spacer/>
         <v-btn
           :loading="loading"
@@ -11,7 +11,7 @@
           Save
         </v-btn>
       </v-layout>
-      <v-layout row>
+      <v-layout>
         <v-flex sm2 xs12 offset-sm4 class="pad-right">
           <v-select
             :loading="loading"
@@ -36,7 +36,7 @@
         </v-flex>
       </v-layout>
       <jvc-remote-input :input="input" v-for="input in inputs"/>
-      <v-layout row>
+      <v-layout>
         <v-btn
           @click="addInput"
           color="pink"

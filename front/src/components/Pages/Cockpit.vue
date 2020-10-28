@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <group v-for="(device) in ptzDevices" :key="device.id" :title="device.name" class="col-12 mt-3" fill-width v-bind:class="tallyClass(device.id)">
-      <v-layout row>
+      <v-layout>
         <ptz-positions :device="device" />
         <v-spacer/>
         <ptz-edit :device="device"/>
@@ -9,7 +9,7 @@
     </group>
 
     <group v-for="(device) in switchers" :key="device.id" :title="device.name" class="col-12 mt-3" fill-width>
-      <v-layout row>
+      <v-layout>
         <switcher :device="device"/>
       </v-layout>
     </group>

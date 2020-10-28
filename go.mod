@@ -6,8 +6,10 @@ require (
 	github.com/Scalingo/go-handlers v1.2.4
 	github.com/Scalingo/go-utils v7.1.0+incompatible
 	github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
+	github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
 	github.com/centrifugal/centrifuge v0.11.2
 	github.com/codegangsta/negroni v1.0.0 // indirect
+	github.com/google/uuid v1.1.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.6.2 // indirect
@@ -24,7 +26,7 @@ require (
 	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	github.com/urfave/cli v1.22.0
 	github.com/xinsnake/go-http-digest-auth-client v0.4.0 // indirect
-	golang.org/x/sys v0.0.0-20201015000850-e3ed0017c211 // indirect
+	golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac // indirect
 	gopkg.in/errgo.v1 v1.0.1-0.20180818175205-2393dcb27450 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )

@@ -33,16 +33,13 @@ export default {
 </script>
 
 <style scoped>
-.clock {
-  color: red;
-  background-color: black;
-  padding: 7px;
-  font-size: 20px;
-  font-family: sevenSeg;
+.clock{
+  width: 10rem;
 }
-
 </style>
 
 <template>
-  <seven-seg :text="curTime"/>
+  <div class="clock">
+    <seven-seg :text="curTime"/>
+  </div>
 </template>

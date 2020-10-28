@@ -1,6 +1,7 @@
 import 'normalize.css'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
 import 'jointjs/dist/joint.css'
 
 import Vue from 'vue'
@@ -95,9 +96,32 @@ Vue.component('ptz-form', PtzForm)
 import Switcher from './components/Switcher/Switcher.vue'
 Vue.component('switcher', Switcher)
 
+// Timers
+import AddTimer from './components/Timers/AddTimer.vue'
+import TimerForm from './components/Timers/Form.vue'
+import TimerCard from './components/Timers/TimerCard.vue'
+Vue.component('add-timer', AddTimer)
+Vue.component('timer-form', TimerForm)
+Vue.component('timer-card', TimerCard)
+
+// Scenes
+import SceneElemForm from './components/Scenes/ElemForm.vue'
+import SceneView from './components/Scenes/View.vue'
+Vue.component('scene-elem-form', SceneElemForm)
+Vue.component('scene-view', SceneView)
+
 // Form validation
 import VeeValidate from 'vee-validate'
 Vue.use(VeeValidate)
+
+// Resize text
+
+import AutoText from 'vue-auto-text'
+Vue.component(AutoText.name, AutoText)
+
+// UUID
+import UUID from "vue-uuid";
+Vue.use(UUID);
 
 // Store
 import store from './store'
@@ -110,8 +134,15 @@ Vue.config.productionTip = false
 window.$ = require('jquery');
 window.joint = require('jointjs');
 
+let vuetify = new Vuetify({
+  theme: {
+    dark: true,
+  }
+})
+
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

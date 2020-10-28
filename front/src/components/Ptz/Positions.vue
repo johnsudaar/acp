@@ -1,5 +1,5 @@
 <template>
-  <v-layout row>
+  <v-layout>
     <atem-btn v-for="(pos) in positions" :key="pos.id" :name="pos.name" big @click="positionClicked(pos.id)" :red="selectedPos == pos.id"/>
   </v-layout>
 </template>

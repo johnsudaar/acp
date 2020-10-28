@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-md fill-height>
-    <v-layout row wrap>
+    <v-layout wrap>
       <v-flex xs3>
         <pad :pad="pads[0]" index="0"/>
       </v-flex>

@@ -26,7 +26,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="openErrorModal= false">
+          <v-btn color="primary" text @click="openErrorModal= false">
             Ok
           </v-btn>
         </v-card-actions>
@@ -103,7 +103,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #graph_container {
   margin-top: 10px;
   width: 100%;
@@ -112,5 +112,9 @@ export default {
 
 .toolbar {
   width: 100%;
+}
+
+.joint-link.joint-theme-default .connection {
+  stroke: rgba(255,255,255,.25);
 }
 </style>
