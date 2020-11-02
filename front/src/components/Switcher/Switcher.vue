@@ -15,7 +15,21 @@ export default {
       selectedInput: null,
     }
   },
+  mounted() {
+    window.addEventListener('keydown', this.onKeyDown);
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.onKeyDown);
+  },
   methods: {
+    onKeyDown(key) {
+      key = key.keyCode
+      if(key < 97 || key > 105) {
+        return
+      }
+      let input = key - 97;
+      this.changeInput(this.device.input_ports[input])
+    },
     async changeInput(input) {
       try {
         await this.$store.state.config.apiClient.switcher.switchOutput(this.device.id, "PGM", input)

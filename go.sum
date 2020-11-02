@@ -29,8 +29,10 @@ github.com/a-contre-plongee/hyperdeck v0.0.0-20201025095013-7b94a9370843/go.mod 
 github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e h1:l1Gno9nqbFLSLp6ePtKAUmJQaAZTu5oPIKs8rYZIYpQ=
 github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e/go.mod h1:SJx2gviGKQkh9ss4pAcjxD3kSxSBPMI74SGJKW/z1Ag=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
+github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 h1:JYp7IbQjafoB+tBA3gMyHYHrpOtNuDiK/uB5uXxq5wM=
 github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRFXyAe+OPACYpWeL0wqObRcbAqCMya13uyzqw0=
+github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4 h1:Hs82Z41s6SdL1CELW+XaDYmOH4hkBN4/N9og/AsOv7E=
 github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4/go.mod h1:ybxpYRFXyAe+OPACYpWeL0wqObRcbAqCMya13uyzqw0=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
@@ -117,6 +119,10 @@ github.com/johnsudaar/atem v0.0.0-20190315203433-58de10515507 h1:NS4e1tXe1nV7D6z
 github.com/johnsudaar/atem v0.0.0-20190315203433-58de10515507/go.mod h1:hn8sP8WlU48ALNJIehfUQWCpYba9uU+OvwhzxkYATjo=
 github.com/johnsudaar/atem v0.0.0-20201015202839-af5dfc9087ea h1:k8T1Vx5hi11TSwJsFSkJoLsg3a/sSpJzzc4BOeu3sCU=
 github.com/johnsudaar/atem v0.0.0-20201015202839-af5dfc9087ea/go.mod h1:hn8sP8WlU48ALNJIehfUQWCpYba9uU+OvwhzxkYATjo=
+github.com/johnsudaar/atem v0.0.0-20201102113514-a4e91425d79b h1:kPztiiCrhT2v5FJDTmgNndcymc8TtUPCLQzNZhRZoAc=
+github.com/johnsudaar/atem v0.0.0-20201102113514-a4e91425d79b/go.mod h1:hn8sP8WlU48ALNJIehfUQWCpYba9uU+OvwhzxkYATjo=
+github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f h1:45qllUbovzSThVnvMALdcODroEh9pxfXzrnKRZbrvkA=
+github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f/go.mod h1:hn8sP8WlU48ALNJIehfUQWCpYba9uU+OvwhzxkYATjo=
 github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2 h1:HYeLCWTHtihZL+yFKrlnJHJlm6SzmZCPVHkejqgz0AE=
 github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2/go.mod h1:lDerOPpKDc8SY0SHvYrQVAVyIpisE8lddoFmD5Dx3bA=
 github.com/jonboulle/clockwork v0.1.0/go.mod h1:Ii8DK3G1RaLaWxj9trq07+26W01tbo22gdxWY5EU2bo=
@@ -283,6 +289,8 @@ golang.org/x/sys v0.0.0-20201024232916-9f70ab9862d5 h1:iCaAy5bMeEvwANu3YnJfWwI0k
 golang.org/x/sys v0.0.0-20201024232916-9f70ab9862d5/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac h1:bplbaOojU0hnrC9nvWJ5Nvp/gPIWKFMiGBFI9Cpp16I=
 golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20201101102859-da207088b7d1 h1:a/mKvvZr9Jcc8oKfcmgzyp7OwF73JPWsQLvH1z2Kxck=
+golang.org/x/sys v0.0.0-20201101102859-da207088b7d1/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
@@ -302,6 +310,7 @@ google.golang.org/protobuf v0.0.0-20200228230310-ab0ca4ff8a60/go.mod h1:cfTl7dwQ
 google.golang.org/protobuf v1.20.1-0.20200309200217-e05f789c0967/go.mod h1:A+miEFZTKqfCUM6K7xSMQL9OKL/b6hQv+e19PK+JZNE=
 google.golang.org/protobuf v1.21.0 h1:qdOKuR/EIArgaWNjetjgTzgVTAZ+S/WXVrq9HW9zimw=
 google.golang.org/protobuf v1.21.0/go.mod h1:47Nbq4nVaFHyn7ilMalzfO3qCViNmqZ2kzikPIcrTAo=
+gopkg.in/alecthomas/kingpin.v2 v2.2.6 h1:jMFz6MfLP0/4fUyZle81rXUoxOBFi19VUFKVDOQfozc=
 gopkg.in/alecthomas/kingpin.v2 v2.2.6/go.mod h1:FMv+mEhP44yOT+4EoQTLFTRgOQ1FBLkstjWtayDeSgw=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=

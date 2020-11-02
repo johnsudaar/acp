@@ -75,7 +75,7 @@ github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
 # github.com/igm/sockjs-go/v3 v3.0.0
 github.com/igm/sockjs-go/v3/sockjs
-# github.com/johnsudaar/atem v0.0.0-20201015202839-af5dfc9087ea
+# github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f
 github.com/johnsudaar/atem
 # github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 github.com/johnsudaar/jvc_api/client
@@ -133,7 +133,7 @@ github.com/subosito/gotenv
 github.com/urfave/cli
 # github.com/xinsnake/go-http-digest-auth-client v0.4.0
 github.com/xinsnake/go-http-digest-auth-client
-# golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac
+# golang.org/x/sys v0.0.0-20201101102859-da207088b7d1
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows

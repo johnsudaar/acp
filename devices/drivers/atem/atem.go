@@ -91,5 +91,7 @@ func (a *ATEM) watchDog() {
 }
 
 func (a *ATEM) Types() []types.Type {
-	return []types.Type{}
+	return []types.Type{
+		types.SwitcherType,
+	}
 }

@@ -13,7 +13,7 @@ require (
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.6.2 // indirect
-	github.com/johnsudaar/atem v0.0.0-20201015202839-af5dfc9087ea
+	github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f
 	github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 	github.com/juju/errgo v0.0.0-20140925100237-08cceb5d0b53 // indirect
 	github.com/kelseyhightower/envconfig v1.3.0 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	github.com/urfave/cli v1.22.0
 	github.com/xinsnake/go-http-digest-auth-client v0.4.0 // indirect
-	golang.org/x/sys v0.0.0-20201028094953-708e7fb298ac // indirect
+	golang.org/x/sys v0.0.0-20201101102859-da207088b7d1 // indirect
 	gopkg.in/errgo.v1 v1.0.1-0.20180818175205-2393dcb27450 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )
