@@ -7,9 +7,9 @@ import (
 	"github.com/johnsudaar/acp/devices/drivers/hyperdeck"
 	jvc "github.com/johnsudaar/acp/devices/drivers/jvc_hm_660"
 	jvcremote "github.com/johnsudaar/acp/devices/drivers/jvc_remote"
+	restream "github.com/johnsudaar/acp/devices/drivers/restream_chat"
 	"github.com/johnsudaar/acp/devices/drivers/smartview"
 	tally "github.com/johnsudaar/acp/devices/drivers/tally_rasp"
-	"github.com/johnsudaar/acp/devices/drivers/tallybox"
 	"github.com/johnsudaar/acp/devices/drivers/tallyrecorder"
 )
 
@@ -20,7 +20,8 @@ func LoadDrivers() {
 	devices.RegisterType("TALLY_RASP", tally.NewLoader())
 	devices.RegisterType("TALLY_REC", tallyrecorder.NewLoader())
 	devices.RegisterType("SMARTVIEW_DUO", smartview.NewLoader())
-	devices.RegisterType("TALLY_BOX", tallybox.NewLoader())
+	//devices.RegisterType("TALLY_BOX", tallybox.NewLoader())
 	devices.RegisterType("HS_50", hs50.NewLoader())
 	devices.RegisterType("HYPERDECK", hyperdeck.NewLoader())
+	devices.RegisterType("RESTREAM", restream.NewLoader())
 }

@@ -13,6 +13,7 @@ require (
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.6.2 // indirect
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f
 	github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 	github.com/juju/errgo v0.0.0-20140925100237-08cceb5d0b53 // indirect

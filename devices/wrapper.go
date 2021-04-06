@@ -10,6 +10,7 @@ import (
 	handlers "github.com/Scalingo/go-handlers"
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/johnsudaar/acp/devices/types"
+	"github.com/johnsudaar/acp/devices/types/chat"
 	"github.com/johnsudaar/acp/devices/types/ptz"
 	"github.com/johnsudaar/acp/devices/types/switcher"
 	"github.com/johnsudaar/acp/devices/types/tally"
@@ -56,6 +57,12 @@ func Wrap(d Device) (Device, error) {
 				return nil, errors.Wrapf(err, "fail to import device type %s", t)
 			}
 			deviceTypes[t] = timer
+		case types.ChatType:
+			chat, err := chat.Import(d)
+			if err != nil {
+				return nil, errors.Wrapf(err, "fail to import device type %s", t)
+			}
+			deviceTypes[t] = chat
 		}
 
 	}

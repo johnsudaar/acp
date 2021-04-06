@@ -25,6 +25,7 @@ const (
 	PTZType      Type = "ptz"
 	SwitcherType Type = "switcher"
 	TimerType    Type = "timer"
+	ChatType     Type = "chat"
 )
 
 var (
