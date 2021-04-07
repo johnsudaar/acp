@@ -13,9 +13,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const (
+	AtemType1ME             = "atem_1_me"
+	AtemTypeConstellationHD = "atem_constellation_hd"
+)
+
 type AtemParams struct {
 	IP   string `json:"ip"`   // ATEM IP
 	Port int    `json:"port"` // ATEM Port
+	Type string `json:"type"`
 }
 
 type atemLoader struct{}
@@ -35,6 +41,10 @@ func (atemLoader) Load(ctx context.Context, base *devices.Base, message json.Raw
 	atem.Port = strconv.Itoa(params.Port)
 	atem.Base = base
 	atem.stoppingLock = &sync.Mutex{}
+	atem.atemType = params.Type
+	if atem.atemType == "" {
+		atem.atemType = AtemType1ME
+	}
 
 	atem.log = logger.Get(ctx).WithFields(logrus.Fields{
 		"device":    atem.Name,
@@ -67,6 +77,21 @@ func (atemLoader) Params() params.Params {
 			Default:     9910,
 			Min:         1,
 			Max:         65535,
+		},
+		"type": params.Input{
+			Type:        params.Select,
+			Description: "Atem Model",
+			Required:    false,
+			Default:     "atem_1_me",
+			Options: []params.SelectOption{
+				{
+					Value: AtemType1ME,
+					Name:  "Atem 1 M/E",
+				}, {
+					Value: AtemTypeConstellationHD,
+					Name:  "Atem Constellation (HD Mode)",
+				},
+			},
 		},
 	}
 }

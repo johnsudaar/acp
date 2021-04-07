@@ -13,6 +13,19 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type atemIOConfig struct {
+	Inputs int
+}
+
+var ioConfigs map[string]atemIOConfig = map[string]atemIOConfig{
+	AtemType1ME: {
+		Inputs: 10,
+	},
+	AtemTypeConstellationHD: {
+		Inputs: 40,
+	},
+}
+
 type ATEM struct {
 	*devices.Base
 	IP   string
@@ -23,6 +36,8 @@ type ATEM struct {
 	stopping     bool
 
 	client *atem.AtemClient
+
+	atemType string
 }
 
 func (a *ATEM) Start() error {

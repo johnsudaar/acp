@@ -22,6 +22,17 @@
                   required/>
               </v-flex>
               <v-flex xs12 sm12 v-for="(meta, name) in params" :key="name">
+                <v-select
+                  item-text="name"
+                  item-value="value"
+                  :label="meta.description"
+                  :value="values[name]"
+                  :items="meta.options"
+                  v-on:input="values[name] = $event"
+                  :error-messages="errors.collect(name)"
+                  :data-vv-name="name"
+                  v-if="meta.type == 'select'"
+                  />
                 <v-text-field
                   :value="values[name]"
                   v-on:input="values[name] = $event"
@@ -29,6 +40,7 @@
                   v-validate="validatorFor(meta)"
                   :error-messages="errors.collect(name)"
                   :data-vv-name="name"
+                  v-else
                   />
               </v-flex>
             </v-layout>
