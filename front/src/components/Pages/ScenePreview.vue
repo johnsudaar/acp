@@ -4,8 +4,10 @@
 
 <script>
 import TimersMixin from '@/mixins/timers'
+import ChatMixin from '@/mixins/chat'
+
 export default {
-  mixins: [TimersMixin],
+  mixins: [TimersMixin, ChatMixin],
   data() {
     return {
       scene: Object,

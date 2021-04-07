@@ -8,6 +8,9 @@ import (
 
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/gorilla/websocket"
+	"github.com/johnsudaar/acp/devices/types/chat"
+	"github.com/johnsudaar/acp/events"
+	uuid "github.com/satori/go.uuid"
 )
 
 type RestreamPayload struct {
@@ -92,8 +95,18 @@ func (r *Restream) openWebsocketConnection(ctx context.Context) {
 			if chatEvent.EventPayload.Bot || chatEvent.EventPayload.Text == "" {
 				continue
 			}
+			uuid, _ := uuid.NewV4()
 
-			log.Infof("[%s] %s", chatEvent.EventPayload.Author.DisplayName, chatEvent.EventPayload.Text)
+			msg := chat.ChatMessage{
+				ID:        uuid.String(),
+				Timestamp: time.Now().Unix(),
+				From:      chatEvent.EventPayload.Author.DisplayName,
+				Message:   chatEvent.EventPayload.Text,
+				Channel:   "N/C",
+			}
+
+			r.PublishRealtimeEvent(ctx, events.ChatChannel, msg)
+
 		}
 
 	}

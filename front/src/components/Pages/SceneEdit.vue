@@ -5,7 +5,6 @@
         <div class="preview">
           <scene-view :elems="elems"/>
         </div>
-      </div>
       </v-col>
       <v-col cols="6">
         <v-card>
@@ -63,8 +62,10 @@
 
 <script>
 import TimersMixin from '@/mixins/timers'
+import ChatMixin from '@/mixins/chat'
+
 export default {
-  mixins: [TimersMixin],
+  mixins: [TimersMixin, ChatMixin],
   data() {
     return {
       scene: {},

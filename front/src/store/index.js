@@ -6,6 +6,7 @@ import devices from './modules/devices'
 import ptzpositions from './modules/ptzpositions'
 import timers from './modules/timers'
 import scenes from './modules/scenes'
+import chat from './modules/chat'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     devices,
     ptzpositions,
     timers,
-    scenes
+    scenes,
+    chat,
   }
 })

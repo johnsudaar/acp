@@ -9,9 +9,11 @@ import (
 )
 
 type ChatMessage struct {
-	From    string
-	Channel string
-	Message string
+	ID        string `json:"id"`
+	Timestamp int64  `json:"timestamp,omitempty"`
+	From      string `json:"from,omitempty"`
+	Channel   string `json:"channel,omitempty"`
+	Message   string `json:"message,omitempty"`
 }
 
 type ChatHandler func(ctx context.Context, message ChatMessage)

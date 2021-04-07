@@ -95,6 +95,23 @@
           label="Timer"/>
       </v-col>
     </v-row>
+    <v-row
+      v-if="elem.type == 'chat'">
+      <v-col cols="6">
+        <v-select
+          v-model="elem.chatId"
+          :items="chats"
+          item-text="name"
+          item-value="id"
+          label="Chat"/>
+      </v-col>
+      <v-col cols="6">
+        <v-text-field
+          v-model="elem.chatFontSize"
+          label="Chat Font Size"
+          />
+      </v-col>
+    </v-row>
   </v-form>
 </template>
 
@@ -112,6 +129,7 @@ export default {
       elemTypes: [
         {name: "Text", value: "text"},
         {name: "Timer", value: "timer"},
+        {name: "Chat", value: "chat"},
       ]
     }
   },
@@ -119,6 +137,13 @@ export default {
     timers() {
       return Object.values(this.$store.state.timers.timers);
     },
+    chats() {
+      return this.$store.state.devices.devices.filter((device) => {
+        return device.types.includes("chat")
+      }).sort((a,b) => {
+        return a.name > b.name ? 1 : -1
+      })
+    }
   },
   mounted() {
     if(this.item) {

@@ -107,8 +107,10 @@ Vue.component('timer-card', TimerCard)
 // Scenes
 import SceneElemForm from './components/Scenes/ElemForm.vue'
 import SceneView from './components/Scenes/View.vue'
+import ChatWidget from './components/Scenes/ChatWidget.vue'
 Vue.component('scene-elem-form', SceneElemForm)
 Vue.component('scene-view', SceneView)
+Vue.component('chat-widget', ChatWidget)
 
 // Form validation
 import VeeValidate from 'vee-validate'
