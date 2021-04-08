@@ -24,6 +24,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b
 	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/viper v1.6.2
 	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	github.com/urfave/cli v1.22.0

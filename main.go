@@ -19,6 +19,7 @@ import (
 	"github.com/johnsudaar/acp/timer"
 	"github.com/johnsudaar/acp/webserver"
 	"github.com/pkg/errors"
+	jww "github.com/spf13/jwalterweatherman"
 )
 
 var (
@@ -26,6 +27,10 @@ var (
 )
 
 func main() {
+	if len(os.Args) == 1 {
+		StartServer(true)
+		return
+	}
 	app := &cli.App{
 		Name:    "acp",
 		Version: Version,
@@ -33,7 +38,7 @@ func main() {
 			{
 				Name: "start",
 				Action: func(c *cli.Context) error {
-					StartServer()
+					StartServer(false)
 					return nil
 				},
 			},
@@ -46,7 +51,9 @@ func main() {
 	}
 }
 
-func StartServer() {
+func StartServer(gui bool) {
+	jww.SetStdoutThreshold(jww.LevelDebug)
+
 	// ------------ Initialization -------------------
 	// Load App config
 	err := config.Init()
@@ -90,27 +97,39 @@ func StartServer() {
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
 	go proxy.Start()
-	go webserver.Start(ctx, graph, realtime, timers, scenes)
+	if !gui {
+		err := webserver.Start(ctx, graph, realtime, timers, scenes)
+		if err != nil {
+			panic(err)
+		}
+		return
+	} else {
+		go func() {
+			err := webserver.Start(ctx, graph, realtime, timers, scenes)
+			if err != nil {
+				panic(err)
+			}
+		}()
 
-	// Initialize astilectron
-	var a, _ = astilectron.New(log, astilectron.Options{
-		AppName: "ACP",
-	})
-	defer a.Close()
+		// Initialize astilectron
+		var a, _ = astilectron.New(log, astilectron.Options{
+			AppName: "ACP",
+		})
+		defer a.Close()
 
-	// Start astilectron
-	a.Start()
+		// Start astilectron
+		a.Start()
 
-	config := config.Get()
-	serverURL := fmt.Sprintf("http://127.0.0.1:%v", config.Server.Port)
-	serverURL = "http://127.0.0.1:8080"
+		config := config.Get()
+		serverURL := fmt.Sprintf("http://localhost:%v/index.html", config.Server.Port)
+		fmt.Println(serverURL)
 
-	var w, _ = a.NewWindow(serverURL, &astilectron.WindowOptions{
-		Center: astikit.BoolPtr(true),
-		Height: astikit.IntPtr(600),
-		Width:  astikit.IntPtr(600),
-	})
-	w.Create()
-	a.Wait()
-
+		var w, _ = a.NewWindow(serverURL, &astilectron.WindowOptions{
+			Center: astikit.BoolPtr(true),
+			Height: astikit.IntPtr(1024),
+			Width:  astikit.IntPtr(1024),
+		})
+		w.Create()
+		a.Wait()
+	}
 }

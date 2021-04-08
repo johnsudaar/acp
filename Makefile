@@ -2,7 +2,7 @@ ifndef VERSION
 override VERSION=dev
 endif
 
-.PHONY: all clean front config pkg-image pkd-debug pkg pkg-init
+.PHONY: all clean front config pkg-windows
 
 all: server front config
 
@@ -28,14 +28,8 @@ install:
 	cp acp.yml $(DESTDIR)/etc/acp/acp.yml
 	cp build/acp.init.d $(DESTDIR)/etc/init.d/acp
 
-pkg-image:
-	docker build ./build/ -t acp_package_eng
-
-pkg-debug: pkg-image
-	docker run -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm -it acp_package_eng bash
-
-pkg-init: pkg-image
-	docker run -e VERSION=$(VERSION) -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm acp_package_eng bash -c 'bundle install'
-
-pkg: pkg-init
-	docker run -e VERSION=$(VERSION) -v $(CURDIR):/data -v $(CURDIR)/pkg:/pkg --rm acp_package_eng bash -c 'bundle exec rake build'
+pkg-windows:
+	mkdir dist/windows/
+	cp -R front/dist/ dist/windows/front
+	cp ./acp.exe dist/windows
+	cp ./acp.yml dist/windows/acp.yml

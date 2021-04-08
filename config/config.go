@@ -25,17 +25,18 @@ type DatabaseConfig struct {
 
 func GetViperConfig() *viper.Viper {
 	v := viper.New()
-	v.SetConfigType("yaml")
-	v.SetConfigName("acp.yml")
+	v.SetConfigType("yml")
+	v.SetConfigFile("acp.yml")
 	v.AddConfigPath("$HOME/.config/acp")
 	v.AddConfigPath("/etc/acp")
+	v.AddConfigPath(".")
 
 	v.SetDefault("database.url", "mongodb://localhost:27017")
 	v.BindEnv("database.url")
 
 	v.SetDefault("server.port", "8081")
 	v.BindEnv("server.port")
-	v.SetDefault("server.assets_path", "/var/lib/acp/front")
+	v.SetDefault("server.assets_path", "front/")
 	v.BindEnv("server.assets_path")
 
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
