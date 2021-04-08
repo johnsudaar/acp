@@ -100,7 +100,7 @@ func (t *Timer) Value() string {
 	defer t.timerLock.RUnlock()
 	timer := t.timer
 	if timer.Type == models.TimerTypeClock {
-		loc, _ := time.LoadLocation("Europe/Paris")
+		loc, _ := time.LoadLocation("Local")
 		return time.Now().In(loc).Format(ClockFormat)
 	}
 

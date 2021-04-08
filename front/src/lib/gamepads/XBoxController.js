@@ -8,9 +8,14 @@ const X = 2;
 const Y = 3;
 const A = 0;
 const B = 1;
-const BACK = 9;
-const START = 8;
+const BACK = 8;
+const START = 9;
 const RAxisButton = 11;
+const RIGHT = 15;
+const LEFT = 14;
+const DOWN = 13;
+const UP = 12;
+
 
 const DEADZONE = 0.16;
 
@@ -20,7 +25,7 @@ export default class XBoxController {
     this.leftHandedPressed = false;
     this.jibMode = false;
     this.jibPressed = false;
-    this.speed = 0.9;
+    this.speed = 0.75;
   }
 
   toActions(gamepad) {
@@ -32,12 +37,26 @@ export default class XBoxController {
       camAxis = temp
     }
 
-    // For normal operations
-    if(this.jibMode) {
-      camAxis.x *= -1;
-    } else {
-      camAxis.y = -1 * camAxis.y;
+    if(gamepad.buttons[UP].pressed) {
+      camAxis.y = -1 * this.speed;
     }
+    if(gamepad.buttons[DOWN].pressed) {
+      camAxis.y = 1 * this.speed;
+    }
+
+    if(gamepad.buttons[LEFT].pressed)  {
+      //camAxis.x = -1 * this.speed;
+    }
+
+    if(gamepad.buttons[RIGHT].pressed) {
+      //camAxis.x = 1 * this.speed;
+    }
+
+    if(!this.jibMode) {
+      // For normal operations
+      camAxis.y *= -1;
+    }
+
 
     let zoomOut = gamepad.buttons[LT].value;
     let zoomIn = gamepad.buttons[RT].value;
@@ -64,14 +83,14 @@ export default class XBoxController {
     }
 
     if(gamepad.buttons[X].pressed) {
-      this.speed = .35;
+      this.speed = .25;
     }
 
     if(gamepad.buttons[Y].pressed) {
       this.speed = .5;
     }
     if(gamepad.buttons[B].pressed) {
-      this.speed = .9;
+      this.speed = .75;
     }
 
     let buttons = {

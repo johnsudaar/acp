@@ -2,6 +2,7 @@ package jvc
 
 import (
 	"sync"
+	"time"
 
 	"github.com/johnsudaar/acp/devices/types/ptz"
 	"github.com/johnsudaar/jvc_api/client"
@@ -11,6 +12,10 @@ import (
 var EPSILON float64 = 0.00000001
 
 func (j *JVCHM660) SendPTZJoystick(params ptz.PTZJoystickParams) error {
+	start := time.Now()
+	defer func() {
+		j.log.Infof("PTZ Took: %v", time.Now().Sub(start))
+	}()
 	j.clientSync.RLock()
 	cam := j.client
 	j.clientSync.RUnlock()
@@ -103,27 +108,31 @@ func (j *JVCHM660) SendPTZJoystick(params ptz.PTZJoystickParams) error {
 	var wg sync.WaitGroup
 	wg.Add(4)
 	go func() {
+		before := time.Now()
 		joyErr = cam.JoyStickOperation(joystickParams)
+		j.log.Info(time.Now().Sub(before))
 		wg.Done()
 	}()
 
 	go func() {
+		defer wg.Done()
 		zoomErr = cam.Zoom(zoomParams)
-		wg.Done()
 	}()
 
 	go func() {
+		defer wg.Done()
+		return
 		if params.Buttons.FocusPushAuto {
 			focusErr = cam.FocusPushAuto()
 		} else {
 			focusErr = cam.Focus(focusSpeed)
 		}
-		wg.Done()
 	}()
 
 	go func() {
+		defer wg.Done()
+		return
 		irisErr = cam.Iris(irisDirection)
-		wg.Done()
 	}()
 	wg.Wait()
 
