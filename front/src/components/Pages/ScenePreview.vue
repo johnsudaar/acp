@@ -1,6 +1,15 @@
 <template>
+<div class="scene-preview">
   <scene-view :elems="scene.elements"/>
+</div>
 </template>
+
+<style scoped>
+.scene-preview {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
 
 <script>
 import TimersMixin from '@/mixins/timers'

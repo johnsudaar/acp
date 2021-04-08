@@ -72,7 +72,7 @@ func (r *Restream) openWebsocketConnection(ctx context.Context) {
 				return
 			}
 
-			c.SetReadDeadline(time.Now().Add(30 * time.Second))
+			c.SetReadDeadline(time.Now().Add(1 * time.Minute))
 			_, message, err := c.ReadMessage()
 			if err != nil {
 				log.WithError(err).Error("fail to receive message")

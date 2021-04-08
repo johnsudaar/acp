@@ -15,7 +15,7 @@ const mutations = {
 
         // Prevent duplication if there are multiple listeners
         for(let msg of chat) {
-            if(msg.id == paramd.id) {
+            if(msg.id == params.id) {
                 return
             }
         }

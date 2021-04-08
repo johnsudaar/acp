@@ -6,6 +6,8 @@ import (
 	"os"
 
 	"github.com/Scalingo/go-utils/logger"
+	"github.com/asticode/go-astikit"
+	"github.com/asticode/go-astilectron"
 	"github.com/urfave/cli"
 
 	"github.com/johnsudaar/acp/config"
@@ -88,8 +90,27 @@ func StartServer() {
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
 	go proxy.Start()
-	err = webserver.Start(ctx, graph, realtime, timers, scenes)
-	if err != nil {
-		panic(err)
-	}
+	go webserver.Start(ctx, graph, realtime, timers, scenes)
+
+	// Initialize astilectron
+	var a, _ = astilectron.New(log, astilectron.Options{
+		AppName: "ACP",
+	})
+	defer a.Close()
+
+	// Start astilectron
+	a.Start()
+
+	config := config.Get()
+	serverURL := fmt.Sprintf("http://127.0.0.1:%v", config.Server.Port)
+	serverURL = "http://127.0.0.1:8080"
+
+	var w, _ = a.NewWindow(serverURL, &astilectron.WindowOptions{
+		Center: astikit.BoolPtr(true),
+		Height: astikit.IntPtr(600),
+		Width:  astikit.IntPtr(600),
+	})
+	w.Create()
+	a.Wait()
+
 }

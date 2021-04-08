@@ -1,6 +1,15 @@
 <template>
-  <scene-view :elems="scene.elements"/>
+  <div class="scene-active">
+    <scene-view :elems="scene.elements" />
+  </div>
 </template>
+
+<style scoped>
+.scene-active {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
 
 <script>
 import TimersMixin from '@/mixins/timers'

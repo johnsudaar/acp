@@ -15,6 +15,7 @@ export default {
     },
     methods: {
         onChatMessage(message) {
+            console.log(message)
             let payload = message.data;
             this.$store.commit('chat/addMessage', {
                 id: payload.sender_id,

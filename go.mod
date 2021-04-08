@@ -8,6 +8,8 @@ require (
 	github.com/Scalingo/go-utils/mongo v1.1.0
 	github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
 	github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
+	github.com/asticode/go-astikit v0.20.0 // indirect
+	github.com/asticode/go-astilectron v0.22.5 // indirect
 	github.com/centrifugal/centrifuge v0.11.2
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/google/uuid v1.1.2 // indirect
