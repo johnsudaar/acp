@@ -10,6 +10,7 @@ require (
 	github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
 	github.com/asticode/go-astikit v0.20.0 // indirect
 	github.com/asticode/go-astilectron v0.22.5 // indirect
+	github.com/bwmarrin/discordgo v0.23.2 // indirect
 	github.com/centrifugal/centrifuge v0.11.2
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/google/uuid v1.1.2 // indirect

@@ -3,6 +3,7 @@ package drivers
 import (
 	"github.com/johnsudaar/acp/devices"
 	"github.com/johnsudaar/acp/devices/drivers/atem"
+	"github.com/johnsudaar/acp/devices/drivers/discord"
 	"github.com/johnsudaar/acp/devices/drivers/hs50"
 	"github.com/johnsudaar/acp/devices/drivers/hyperdeck"
 	jvc "github.com/johnsudaar/acp/devices/drivers/jvc_hm_660"
@@ -24,4 +25,5 @@ func LoadDrivers() {
 	devices.RegisterType("HS_50", hs50.NewLoader())
 	devices.RegisterType("HYPERDECK", hyperdeck.NewLoader())
 	devices.RegisterType("RESTREAM", restream.NewLoader())
+	devices.RegisterType("DISCORD", discord.NewLoader())
 }
