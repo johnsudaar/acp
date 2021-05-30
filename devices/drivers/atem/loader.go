@@ -47,8 +47,8 @@ func (atemLoader) Load(ctx context.Context, base *devices.Base, message json.Raw
 	}
 
 	atem.log = logger.Get(ctx).WithFields(logrus.Fields{
-		"device":    atem.Name,
-		"device_id": atem.ID,
+		"device":    atem.Name(),
+		"device_id": atem.ID(),
 	})
 	return &atem, nil
 }

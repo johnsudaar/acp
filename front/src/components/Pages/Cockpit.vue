@@ -2,7 +2,7 @@
   <v-container>
     <group v-for="(device) in ptzDevices" :key="device.id" :title="device.name" class="col-12 mt-3" fill-width v-bind:class="tallyClass(device.id)">
       <v-layout>
-        <ptz-positions :device="device" />
+        <ptz-positions :device="device"/>
         <v-spacer/>
         <ptz-edit :device="device"/>
       </v-layout>

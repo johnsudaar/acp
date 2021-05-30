@@ -15,12 +15,12 @@
         <v-flex xs12 d-flex>
           <v-select :items="positions" label="Position to edit" item-text="name" item-value="id" @change="onPosChanged"/>
         </v-flex>
-        <ptz-form v-if="pos" @changed="onChanged" :device="device" :pos="pos"/>
+        <ptz-form v-if="pos" @changed="onChanged" :device="device" :pos="pos" :disabled="!open"/>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red darken-1" text @click="$emit('close')">Close</v-btn>
+        <v-btn color="red darken-1" text @click="close()">Close</v-btn>
         <v-btn color="green darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit()">Save</v-btn>
       </v-card-actions>
     </v-card>
@@ -28,10 +28,24 @@
 </template>
 
 <script>
+import {PtzPositionEditBus} from '@/buses'
+
 export default {
   props: {
     device: Object,
     open: Boolean,
+  },
+  created() {
+    PtzPositionEditBus.$on("requestEditFormFor", (device, position) => {
+      if(device === this.device.id) {
+        this.posId = position;
+      }
+    })
+    PtzPositionEditBus.$on("setActivePositionFor", (device, position) => {
+      if(device === this.device.id) {
+        this.posId = position;
+      }
+    })
   },
   data () {
     return {
@@ -70,6 +84,10 @@ export default {
         cam: this.device.id,
         position: response,
       })
+      this.close()
+    },
+    close() {
+      this.posId = null
       this.$emit('close')
     }
   }

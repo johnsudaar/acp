@@ -32,10 +32,11 @@ type PTZButtons struct {
 }
 
 type PTZPositionParams struct {
-	Pan   float64 `json:"pan"`
-	Tilt  float64 `json:"tilt"`
-	Zoom  float64 `json:"zoom"`
-	Focus float64 `json:"focus"`
+	PositionID string  `json:"position_id"`
+	Pan        float64 `json:"pan"`
+	Tilt       float64 `json:"tilt"`
+	Zoom       float64 `json:"zoom"`
+	Focus      float64 `json:"focus"`
 }
 
 type Ptzable interface {

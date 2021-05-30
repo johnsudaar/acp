@@ -24,7 +24,16 @@
 </template>
 
 <script>
+import {PtzPositionEditBus} from '@/buses'
+
 export default {
+  created() {
+    PtzPositionEditBus.$on("requestEditFormFor", (device, position) =>{
+      if(device === this.device.id) {
+        this.edit=true
+      }
+    })
+  },
   props: {
     device: Object,
   },
