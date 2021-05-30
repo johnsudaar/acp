@@ -8,6 +8,7 @@ import (
 	"github.com/Scalingo/go-utils/logger"
 	"github.com/asticode/go-astikit"
 	"github.com/asticode/go-astilectron"
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 
 	"github.com/johnsudaar/acp/config"
@@ -27,22 +28,25 @@ var (
 )
 
 func main() {
-	if len(os.Args) == 1 {
-		StartServer(true)
-		return
-	}
 	app := &cli.App{
 		Name:    "acp",
 		Version: Version,
-		Commands: []cli.Command{
-			{
-				Name: "start",
-				Action: func(c *cli.Context) error {
-					StartServer(false)
-					return nil
-				},
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "debug",
+				Usage: "Open the devtool on start",
+			},
+			&cli.StringFlag{
+				Name:  "path",
+				Value: "/",
+				Usage: "Specify a custom path to open on launch",
+			},
+			&cli.BoolFlag{
+				Name:  "no-gui",
+				Usage: "Do not start the GUI",
 			},
 		},
+		Action: StartServer,
 	}
 
 	err := app.Run(os.Args)
@@ -51,17 +55,25 @@ func main() {
 	}
 }
 
-func StartServer(gui bool) {
-	jww.SetStdoutThreshold(jww.LevelDebug)
+func StartServer(c *cli.Context) {
+	if c.Bool("debug") {
+		jww.SetStdoutThreshold(jww.LevelDebug)
+	}
 
 	// ------------ Initialization -------------------
 	// Load App config
+	var log logrus.FieldLogger
+	if c.Bool("debug") {
+		log = logger.Default(logger.WithLogLevel(logrus.DebugLevel))
+	} else {
+		log = logger.Default()
+	}
 	err := config.Init()
 	if err != nil {
 		panic(errors.Wrap(err, "fail to init config"))
 	}
+
 	// Logger init
-	log := logger.Default()
 	ctx := logger.ToCtx(context.Background(), log)
 	log.Info("Config initialized")
 	// Load devices drivers
@@ -97,7 +109,7 @@ func StartServer(gui bool) {
 	log.Info("Starting services")
 	// ------------ Start ----------------------------
 	go proxy.Start()
-	if !gui {
+	if c.Bool("no-gui") {
 		err := webserver.Start(ctx, graph, realtime, timers, scenes)
 		if err != nil {
 			panic(err)
@@ -121,7 +133,7 @@ func StartServer(gui bool) {
 		a.Start()
 
 		config := config.Get()
-		serverURL := fmt.Sprintf("http://localhost:%v/index.html", config.Server.Port)
+		serverURL := fmt.Sprintf("http://localhost:%v/index.html#%s", config.Server.Port, c.String("path"))
 		fmt.Println(serverURL)
 
 		var w, _ = a.NewWindow(serverURL, &astilectron.WindowOptions{
@@ -130,6 +142,12 @@ func StartServer(gui bool) {
 			Width:  astikit.IntPtr(1024),
 		})
 		w.Create()
+		w.Session.ClearCache()
+
+		if c.Bool("debug") {
+			w.OpenDevTools()
+		}
+
 		a.Wait()
 	}
 }
