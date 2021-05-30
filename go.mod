@@ -13,12 +13,13 @@ require (
 	github.com/bwmarrin/discordgo v0.23.2 // indirect
 	github.com/centrifugal/centrifuge v0.11.2
 	github.com/codegangsta/negroni v1.0.0 // indirect
+	github.com/githubnemo/CompileDaemon v1.3.0 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/gorilla/websocket v1.4.2
-	github.com/johnsudaar/atem v0.0.0-20210407103953-f3934a01b7a6
+	github.com/johnsudaar/atem v0.0.0-20210409143557-ec12eecf7474
 	github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 	github.com/juju/errgo v0.0.0-20140925100237-08cceb5d0b53 // indirect
 	github.com/phayes/freeport v0.0.0-20180830031419-95f893ade6f2 // indirect

@@ -65,6 +65,7 @@ export default {
   props: {
     pos: Object,
     device: Object,
+    disabled: Boolean,
   },
   data () {
     return {
@@ -107,6 +108,10 @@ export default {
       this.onInputChanged()
     },
     previewPosition() {
+      if(this.disabled) {
+        return
+      }
+
       this.$store.state.config.apiClient.ptz.position(this.device.id, {
         pan: this.pan,
         tilt: this.tilt,

@@ -54,6 +54,23 @@ func (p *PtzDriver) Position(resp http.ResponseWriter, req *http.Request, params
 		return nil
 	}
 
+	if payload.PositionID != "" {
+		var pos models.PtzPosition
+		if !bson.IsObjectIdHex(payload.PositionID) {
+			utils.Err(ctx, resp, http.StatusNotFound, "invalid id")
+			return nil
+		}
+		err := document.Find(ctx, models.PtzPositionCollection, bson.ObjectIdHex(payload.PositionID), &pos)
+		if err != nil {
+			utils.Err(ctx, resp, http.StatusNotFound, "not found: "+err.Error())
+			return nil
+		}
+		payload.Pan = pos.Pan
+		payload.Tilt = pos.Tilt
+		payload.Zoom = pos.Zoom
+		payload.Focus = pos.Focus
+	}
+
 	err = p.device.SetPosition(payload)
 	if err != nil {
 		log.WithError(err).Error("fail to send ptz")

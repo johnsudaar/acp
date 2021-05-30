@@ -5,7 +5,6 @@ export default {
         }
     },
     mounted() {
-        console.log("Chat Mixin loaded");
         this.chatConnection = this.$store.state.config.apiClient.realtime.subscribe("chat", this.onChatMessage);
     },
     beforeDestroy() {
