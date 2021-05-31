@@ -4,17 +4,25 @@ github.com/FZambia/eagle
 github.com/FZambia/sentinel
 # github.com/Scalingo/go-handlers v1.2.4
 github.com/Scalingo/go-handlers
-# github.com/Scalingo/go-utils v7.1.0+incompatible
+# github.com/Scalingo/go-utils/errors v1.0.0
 github.com/Scalingo/go-utils/errors
+# github.com/Scalingo/go-utils/logger v1.0.0
 github.com/Scalingo/go-utils/logger
+# github.com/Scalingo/go-utils/mongo v1.1.0
 github.com/Scalingo/go-utils/mongo
 github.com/Scalingo/go-utils/mongo/document
 # github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
 github.com/a-contre-plongee/hs50/client
 # github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
 github.com/a-contre-plongee/hyperdeck
+# github.com/asticode/go-astikit v0.20.0
+github.com/asticode/go-astikit
+# github.com/asticode/go-astilectron v0.22.5
+github.com/asticode/go-astilectron
 # github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
+# github.com/bwmarrin/discordgo v0.23.2
+github.com/bwmarrin/discordgo
 # github.com/centrifugal/centrifuge v0.11.2
 github.com/centrifugal/centrifuge
 github.com/centrifugal/centrifuge/internal/bufpool
@@ -38,7 +46,7 @@ github.com/cespare/xxhash/v2
 github.com/codegangsta/negroni
 # github.com/cpuguy83/go-md2man v1.0.10
 github.com/cpuguy83/go-md2man/md2man
-# github.com/fsnotify/fsnotify v1.4.7
+# github.com/fsnotify/fsnotify v1.4.9
 github.com/fsnotify/fsnotify
 # github.com/gogo/protobuf v1.3.1
 github.com/gogo/protobuf/gogoproto
@@ -75,7 +83,7 @@ github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
 # github.com/igm/sockjs-go/v3 v3.0.0
 github.com/igm/sockjs-go/v3/sockjs
-# github.com/johnsudaar/atem v0.0.0-20201102113728-c201726ebd5f
+# github.com/johnsudaar/atem v0.0.0-20210409143557-ec12eecf7474
 github.com/johnsudaar/atem
 # github.com/johnsudaar/jvc_api v0.0.0-20200104181346-91d20297bbd2
 github.com/johnsudaar/jvc_api/client
@@ -112,14 +120,14 @@ github.com/prometheus/procfs/internal/util
 github.com/russross/blackfriday
 # github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b
 github.com/satori/go.uuid
-# github.com/sirupsen/logrus v1.7.0
+# github.com/sirupsen/logrus v1.8.1
 github.com/sirupsen/logrus
 # github.com/spf13/afero v1.1.2
 github.com/spf13/afero
 github.com/spf13/afero/mem
 # github.com/spf13/cast v1.3.0
 github.com/spf13/cast
-# github.com/spf13/jwalterweatherman v1.0.0
+# github.com/spf13/jwalterweatherman v1.1.0
 github.com/spf13/jwalterweatherman
 # github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
@@ -133,7 +141,13 @@ github.com/subosito/gotenv
 github.com/urfave/cli
 # github.com/xinsnake/go-http-digest-auth-client v0.4.0
 github.com/xinsnake/go-http-digest-auth-client
-# golang.org/x/sys v0.0.0-20201101102859-da207088b7d1
+# golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+golang.org/x/crypto/internal/subtle
+golang.org/x/crypto/nacl/secretbox
+golang.org/x/crypto/poly1305
+golang.org/x/crypto/salsa20/salsa
+# golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57
+golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
@@ -171,15 +185,15 @@ google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/timestamppb
-# gopkg.in/errgo.v1 v1.0.1-0.20180818175205-2393dcb27450
+# gopkg.in/errgo.v1 v1.0.1
 gopkg.in/errgo.v1
 # gopkg.in/ini.v1 v1.51.0
 gopkg.in/ini.v1
-# gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
+# gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 gopkg.in/mgo.v2
 gopkg.in/mgo.v2/bson
 gopkg.in/mgo.v2/internal/json
 gopkg.in/mgo.v2/internal/sasl
 gopkg.in/mgo.v2/internal/scram
-# gopkg.in/yaml.v2 v2.2.5
+# gopkg.in/yaml.v2 v2.3.0
 gopkg.in/yaml.v2
