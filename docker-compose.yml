@@ -1,6 +1,6 @@
 version: '2'
 services:
-  web:
+  back:
     build: .
     volumes:
       - ./:/go/src/github.com/johnsudaar/acp
@@ -15,6 +15,14 @@ services:
     links:
       - mongo
     command: reflex -r '\.go$$' -s -- sh -c 'go build && ./acp --no-gui'
+  front:
+    image: node:16
+    volumes:
+      - ./front/:/mnt
+    ports:
+      - 8080:8080
+    working_dir: /mnt
+    command: bash -c "yarn && yarn serve"
   mongo:
     image: mongo
     volumes:
