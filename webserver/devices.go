@@ -43,7 +43,7 @@ type DeviceResponse struct {
 }
 
 type DeviceUpdateParams struct {
-	DisplayOpts interface{} `json:"display_opts,omitempty"`
+	DisplayOpts *models.DeviceDisplayOpts `json:"display_opts,omitempty"`
 }
 
 // List all devices in the device graph

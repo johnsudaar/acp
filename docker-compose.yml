@@ -23,6 +23,13 @@ services:
       - 8080:8080
     working_dir: /mnt
     command: bash -c "yarn && yarn serve"
+  docs:
+    image: slatedocs/slate
+    volumes:
+      - ./docs:/srv/slate/source
+    ports:
+      - 4567:4567
+    command: serve
   mongo:
     image: mongo
     volumes:
