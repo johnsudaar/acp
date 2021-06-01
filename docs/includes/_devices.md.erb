@@ -1,0 +1,225 @@
+
+# Devices
+
+## List all devices
+
+```shell
+curl "http://127.0.0.1:8081/api/devices"
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+[
+   {
+      "id" : "60b56fc92527fd009002b359",
+      "input_ports" : [
+         "Input_1",
+         "Input_2",
+      ],
+      "name" : "ATEM",
+      "output_ports" : [
+         "PGM",
+         "AUX",
+         "MV"
+      ],
+      "state" : "Not connected",
+      "type" : "ATEM",
+      "types" : [
+         "switcher"
+      ]
+   },
+   {
+      "id" : "60b56fd72527fd009002b35a",
+      "input_ports" : [],
+      "name" : "CAM 1",
+      "output_ports" : [
+         "SDI OUT"
+      ],
+      "state" : "Not connected",
+      "type" : "JVC_HM_660",
+      "types" : [
+         "tally",
+         "ptz"
+      ]
+   }
+]
+```
+
+### HTTP Request
+
+`GET /api/devices`
+
+### Response body
+
+The response body will be an array of devices.
+Each device will have the following fields:
+
+<%= partial "includes/models/device" %>
+
+
+## Get a specific device
+
+```shell
+curl "http://127.0.0.1:8081/api/devices/[ID]"
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+{
+   "display_opts" : {
+      "position" : {
+         "x" : 194,
+         "y" : 260
+      }
+   },
+   "id" : "60b56fd72527fd009002b35a",
+   "input_ports" : [],
+   "name" : "CAM 1",
+   "output_ports" : [
+      "SDI OUT"
+   ],
+   "state" : "Not connected",
+   "type" : "JVC_HM_660",
+   "types" : [
+      "tally",
+      "ptz"
+   ]
+}
+```
+
+### HTTP Request
+
+`GET /api/devices`
+
+### Response body
+
+The response body will be an array of devices.
+Each device will have the following fields:
+
+<%= partial "includes/models/device_full" %>
+
+### DeviceDisplayOpts
+
+<%= partial "includes/models/device_display_opts" %>
+
+## Create a device
+
+```shell
+curl -X POST "http://127.0.0.1:8081/api/devices" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "type": "HS_50",
+        "name": "MyDeviceName",
+        "params": {
+            "ip": "192.168.1.1"
+        },
+        "display_opts": {
+            "position": {
+                "x": 10,
+                "y": 10
+            }
+        }
+    }'
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+{
+    "id":"60b6a1252527fd016ba4911d",
+    "name":"MyDeviceName",
+    "type":"HS_50",
+    "types":["switcher"],
+    "state":"Not connected",
+    "display_opts":{
+        "position":{
+            "x":10,
+            "y":10
+        }
+    },
+    "input_ports":["Input 1","Input 2","Input 3","Input 4","Input 5"],
+    "output_ports":["PGM","MV"]
+}
+```
+
+### HTTP Request
+
+`POST /api/devices`
+
+### Request body
+
+The request body must be a valid JSON object with the following fields:
+
+| Field        | Type              | Required | Description                                                                                     |
+| ------------ | ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
+| type         | string            | true     | Type of the device according to the [device types API](#list-available-device-types)            |
+| name         | string            | true     | Name of this device                                                                             |
+| params       | any               | true     | Parameters needed for this device according to the [device types API](#get-device-types-params) |
+| display_opts | DeviceDisplayOpts | false    | Display option of the device                                                                    |
+
+### DeviceDisplayOpts
+
+<%= partial "includes/models/device_display_opts" %>
+
+### Response body
+
+<%= partial "includes/models/device_full" %>
+
+### DeviceDisplayOpts
+
+<%= partial "includes/models/device_display_opts" %>
+
+
+## Delete a device
+
+```shell
+curl -X DELETE "http://127.0.0.1:8081/api/devices/[ID]"
+```
+
+### HTTP Request
+
+`DELETE /api/devices/[ID]`
+
+This request will destroy the device and any links attached to that device.
+
+### Response body
+
+The response will be a  `204 No Content` with an empty body.
+
+## Update a device
+
+```shell
+curl -X PUT "http://127.0.0.1:8081/api/devices/60b56fc92527fd009002b359" \
+   -H "Content-Type: application/json" \
+   -d '{
+         "display_opts": {
+            "position": {
+               "x": 10,
+               "y": 10
+            }
+         }
+      }'
+```
+
+### HTTP Request
+
+`UPDATE /api/devices/[ID]`
+
+### Request body
+
+The response body will be an array of devices.
+Each device will have the following fields:
+
+| Field        | Type              | Required | Description                  |
+| ------------ | ----------------- | -------- | ---------------------------- |
+| display_opts | DeviceDisplayOpts | false    | Display option of the device |
+
+### DeviceDisplayOpts
+
+<%= partial "includes/models/device_display_opts" %>
+
+### Response
+
+The server will respond a `200 OK` with an empty body.

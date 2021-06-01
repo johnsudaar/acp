@@ -1,0 +1,106 @@
+# Links
+
+## List all links
+
+```shell
+curl "http://127.0.0.1:8081/api/links"
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+[
+   {
+      "created_at" : "2021-05-31T23:23:06.546Z",
+      "id" : "60b56fda2527fd009002b35b",
+      "input" : {
+         "device_id" : "60b56fc92527fd009002b359",
+         "port" : "Input_1"
+      },
+      "output" : {
+         "device_id" : "60b56fd72527fd009002b35a",
+         "port" : "SDI OUT"
+      },
+      "updated_at" : "2021-05-31T23:23:06.546Z"
+   }
+]
+```
+
+### HTTP Request
+
+`GET /api/links`
+
+### Response body
+
+The response body will be an array of links.
+Each link will have the following fields:
+
+<%= partial "includes/models/link" %>
+
+## Create a device
+
+```shell
+curl -X POST "http://127.0.0.1:8081/api/links" \
+    -H "Content-Type: application/json" \
+    -d '{
+       "input": {
+          "device_id": "60b56fc92527fd009002b359",
+          "port": "Input_2"
+       },
+       "output": {
+          "device_id": "60b6a1252527fd016ba4911d",
+          "port": "PGM"
+       }
+    }'
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+{
+   "id":"60b6aba12527fd016ba4911e",
+   "created_at":"2021-06-01T21:50:25.9982434Z",
+   "updated_at":"2021-06-01T21:50:25.9982435Z",
+   "input":{
+      "device_id":"60b56fc92527fd009002b359",
+      "port":"Input_2"
+   },
+   "output":{
+      "device_id":"60b6a1252527fd016ba4911d",
+      "port":"PGM"
+   }
+}
+```
+
+### HTTP Request
+
+`POST /api/devices`
+
+### Request body
+
+| Field            | Type   | Required | Description                                                                   |
+| ---------------- | ------ | -------- | ----------------------------------------------------------------------------- |
+| input.device_id  | string | true     | unique ID of the device that contains the input port connected to this link   |
+| input.port       | string | true     | name of the input port on which the link is connected                         |
+| output.device_id | string | true     | unique ID of the device that contains the output poirt connected to this link |
+| output.port      | string | true     | name of the output port on which the link is connected                        |
+
+### Response body
+
+<%= partial "includes/models/link" %>
+
+## Delete a link
+
+```shell
+curl -X DELETE "http://127.0.0.1:8081/api/links/[ID]"
+```
+
+### HTTP Request
+
+`DELETE /api/links/[ID]`
+
+This request will destroy the link.
+
+### Response body
+
+The response will be a  `204 No Content` with an empty body
