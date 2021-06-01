@@ -196,6 +196,8 @@ func (c DeviceController) Update(resp http.ResponseWriter, req *http.Request, pa
 	if err != nil {
 		return errors.Wrap(err, "fail to update device")
 	}
+
+	resp.WriteHeader(http.StatusOK)
 	return nil
 }
 

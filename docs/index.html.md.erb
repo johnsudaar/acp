@@ -1,0 +1,56 @@
+---
+title: API Reference
+
+language_tabs: # must be one of https://git.io/vQNgJ
+  - shell
+
+toc_footers:
+  - <a href='https://github.com/johnsucaar/acp'>Source code </a>
+  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+
+search: true
+
+code_clipboard: true
+---
+
+# Introduction
+
+Welcome to the ACP Controp Panel API. You can use this API to control the ACP server and the devices linked to this server.
+
+The source code of this project can be found on [the Github Repository](https://github.com/johnsudaar/acp). Feel free to explore the code and propose pull requests!
+
+
+## ACP Core models
+
+The ACP Core is built around a central graph. This graph represent the physical and logical connection inside the user's technical architecture.
+
+The node of this graph are called [Devices](#devices). Those represent a physical or logical entity inside the user's technical architecture.
+The Edges of this graph are called [Links](#links). A link represent a physical or logical connection between a device's input port and another device's output port.
+
+ACP then uses this model to add intelligence over the entire network of the devices.
+
+# Health Check
+
+## Ping the server
+
+```shell
+curl "http://127.0.0.1:8081/api/ping"
+```
+
+> The above command returns a JSON structured like this:
+
+```json
+{
+    "response": "pong"
+}
+```
+
+This endpoint is used to check the connection to the server.
+
+### HTTP Request
+
+`GET http://127.0.0.1:8081/api/ping`
+
+<%= partial "includes/device_types" %>
+<%= partial "includes/devices" %>
+<%= partial "includes/links" %>
