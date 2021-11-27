@@ -5,6 +5,9 @@ export default class RealtimeClient {
     this._ip = ip;
     this._port = port;
     this._ws = new Centrifuge(`ws://${this._ip}:${this._port}/connection/websocket/`)
+    if(this._port == 443) {
+      this._ws = new Centrifuge(`wss://${this._ip}:${this._port}/connection/websocket/`)
+    }
   }
 
   on(event, cb) {

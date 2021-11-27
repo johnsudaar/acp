@@ -87,14 +87,15 @@ func ParseClipLine(line string) (Clip, error) {
 	if len(metadata) < 4 {
 		return clip, fmt.Errorf("invalid metadata: %s", values[1])
 	}
-	clip.Name = metadata[1]
-	startAt, err := ParseTimecode(metadata[2])
+
+	clip.Name = strings.Join(metadata[1:len(metadata)-2], " ")
+	startAt, err := ParseTimecode(metadata[len(metadata)-2])
 	if err != nil {
 		return clip, errors.Wrap(err, "invalid startAt")
 	}
 	clip.StartAt = startAt
 
-	duration, err := ParseTimecode(metadata[3])
+	duration, err := ParseTimecode(metadata[len(metadata)-1])
 	if err != nil {
 		return clip, errors.Wrap(err, "invalid duration")
 	}

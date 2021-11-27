@@ -15,6 +15,9 @@ export default class Client {
   constructor(ip, port) {
     // Construct the base URL
     this._url = `http://${ip}:${port}`;
+    if(port == 443) {
+      this._url = `https://${ip}:${port}`;
+    }
 
     // Init the devices subservice of this API
     this.devices = new DeviceClient(this._url);
