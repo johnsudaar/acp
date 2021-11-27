@@ -7,6 +7,7 @@ import ptzpositions from './modules/ptzpositions'
 import timers from './modules/timers'
 import scenes from './modules/scenes'
 import chat from './modules/chat'
+import positiongroups from './modules/position_groups'
 
 Vue.use(Vuex)
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     timers,
     scenes,
     chat,
+    positiongroups,
   }
 })

@@ -6,6 +6,14 @@
         label="Position name"
         />
     </v-flex>
+    <v-flex xs12>
+      <v-select :items="availablePositionGroups"
+                v-model="position_group_id"
+                item-text="name"
+                item-value="id"
+                label="Position Group"
+                hide-details/>
+    </v-flex>
     <v-flex xs9>
       <v-slider
         v-model="pan"
@@ -73,11 +81,24 @@ export default {
       tilt: 0.0,
       zoom: 0.0,
       name: "",
+      position_group_id: null,
       updateTimeout: null,
     }
   },
   mounted() {
     this.copyPosParams()
+  },
+  computed: {
+    availablePositionGroups() {
+      let res = [{
+        name: "(None)",
+        id: null,
+      }];
+      for(let group in this.$store.state.positiongroups.groups) {
+        res.push(this.$store.state.positiongroups.groups[group])
+      }
+      return res;
+    },
   },
   watch: {
     pos: function() {
@@ -94,7 +115,10 @@ export default {
     },
     zoom: function() {
       this.onInputChanged()
-    }
+    },
+    position_group_id: function() {
+      this.onInputChanged()
+    },
   },
   methods: {
     copyPosParams() {
@@ -105,6 +129,7 @@ export default {
       this.tilt = this.pos.tilt
       this.zoom = this.pos.zoom
       this.name = this.pos.name
+      this.position_group_id = this.pos.position_group_id
       this.onInputChanged()
     },
     previewPosition() {
@@ -126,6 +151,7 @@ export default {
         tilt: this.tilt,
         zoom: this.zoom,
         name: this.name,
+        position_group_id: this.position_group_id,
       })
       if(this.updateTimeout != null) {
         return

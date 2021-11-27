@@ -92,6 +92,15 @@ func (p *PtzDriver) Store(resp http.ResponseWriter, req *http.Request, params ma
 			return nil
 		}
 
+		if payload.PositionGroupID != nil {
+			var pg models.PositionGroup
+			document.Find(ctx, models.PositionGroupCollection, *payload.PositionGroupID, &pg)
+			if err != nil {
+				utils.Err(ctx, resp, http.StatusBadRequest, "invalid position_group_id: "+err.Error())
+				return nil
+			}
+		}
+
 		payload.DeviceID = p.device.ID()
 
 		err = document.Create(ctx, models.PtzPositionCollection, &payload)
@@ -156,19 +165,30 @@ func (p *PtzDriver) SinglePosition(resp http.ResponseWriter, req *http.Request, 
 			return nil
 		}
 
+		if payload.PositionGroupID != nil {
+			var pg models.PositionGroup
+			document.Find(ctx, models.PositionGroupCollection, *payload.PositionGroupID, &pg)
+			if err != nil {
+				utils.Err(ctx, resp, http.StatusBadRequest, "invalid position_group_id: "+err.Error())
+				return nil
+			}
+		}
+
 		pos.Name = payload.Name
 		pos.Pan = payload.Pan
 		pos.Tilt = payload.Tilt
 		pos.Zoom = payload.Zoom
 		pos.Focus = payload.Focus
+		pos.PositionGroupID = payload.PositionGroupID
 
 		err = document.Update(ctx, models.PtzPositionCollection, bson.M{
 			"$set": bson.M{
-				"name":  pos.Name,
-				"pan":   pos.Pan,
-				"tilt":  pos.Tilt,
-				"focus": pos.Focus,
-				"zoom":  pos.Zoom,
+				"name":              pos.Name,
+				"pan":               pos.Pan,
+				"tilt":              pos.Tilt,
+				"focus":             pos.Focus,
+				"zoom":              pos.Zoom,
+				"position_group_id": pos.PositionGroupID,
 			},
 		}, &pos)
 		if err != nil {

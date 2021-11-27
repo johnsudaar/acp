@@ -16,7 +16,7 @@
     </v-dialog>
   </v-card>
 </template>
-test
+
 <script>
 export default {
   props: {

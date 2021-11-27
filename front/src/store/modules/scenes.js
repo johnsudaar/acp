@@ -19,7 +19,7 @@ const mutations = {
     }
   },
 
-  removeScene(scene, id) {
+  removeScene(state, id) {
     Vue.delete(state.scenes, id)
   }
 }

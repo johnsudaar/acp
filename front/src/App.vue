@@ -121,7 +121,7 @@ html {
     </v-app-bar>
     <v-main>
       <v-layout column v-if="$store.state.config.connected || $route.meta.offline" fill-height>
-        <v-container fluid fill-height>
+        <v-container fluid fill-height fill-width :pa-0="$route.meta.doubleMenu">
           <router-view> </router-view>
         </v-container>
       </v-layout>

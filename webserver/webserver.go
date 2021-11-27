@@ -29,6 +29,7 @@ func Start(ctx context.Context, graph graph.Graph, realtime realtime.Realtime, t
 	linkController := NewLinkController(graph)
 	timerController := NewTimerController(timers)
 	sceneController := NewScenesController(scenes)
+	positionGroupsController := NewPositionGroupsController()
 	router.HandleFunc("/api/ping", Ping).Methods("GET")
 	router.HandleFunc("/api/devices", deviceController.List).Methods("GET")
 	router.HandleFunc("/api/devices", deviceController.Create).Methods("POST")
@@ -53,6 +54,9 @@ func Start(ctx context.Context, graph graph.Graph, realtime realtime.Realtime, t
 	router.HandleFunc("/api/scenes/{id}", sceneController.Destroy).Methods("DELETE")
 	router.HandleFunc("/api/scenes/{id}", sceneController.Show).Methods("GET")
 	router.HandleFunc("/api/scenes/{id}/launch", sceneController.Launch).Methods("POST")
+	router.HandleFunc("/api/position_groups", positionGroupsController.List).Methods("GET")
+	router.HandleFunc("/api/position_groups", positionGroupsController.Create).Methods("POST")
+	router.HandleFunc("/api/position_groups/{id}", positionGroupsController.Destroy).Methods("DELETE")
 
 	router.Router.PathPrefix("/").HandlerFunc(Front)
 

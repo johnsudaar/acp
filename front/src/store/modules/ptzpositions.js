@@ -65,7 +65,9 @@ const actions = {
     if(state.positions[cam]) {
       return
     }
-
+    await context.dispatch('refresh', cam);
+  },
+  async refresh(context, cam) {
     let {connected, apiClient} = context.rootState.config;
     if(!connected) {
       throw "Not connected"
