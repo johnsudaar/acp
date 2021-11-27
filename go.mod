@@ -4,17 +4,16 @@ go 1.13
 
 require (
 	github.com/Scalingo/go-handlers v1.2.4
-	github.com/Scalingo/go-utils/logger v1.0.0
+	github.com/Scalingo/go-utils/logger v1.1.0
 	github.com/Scalingo/go-utils/mongo v1.1.0
 	github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
-	github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
+	github.com/a-contre-plongee/hyperdeck v0.0.1
 	github.com/asticode/go-astikit v0.20.0
 	github.com/asticode/go-astilectron v0.22.5
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/centrifugal/centrifuge v0.11.2
 	github.com/codegangsta/negroni v1.0.0 // indirect
 	github.com/githubnemo/CompileDaemon v1.3.0 // indirect
-	github.com/google/uuid v1.1.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/handlers v1.4.0
 	github.com/gorilla/mux v1.6.2 // indirect
