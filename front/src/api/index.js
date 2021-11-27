@@ -9,6 +9,7 @@ import TimersClient from './timers'
 import ScenesClient from './scenes'
 import {cleanError} from './utils'
 import axios from 'axios'
+import PositionGroupsClient from './position_groups'
 
 // ACP API client
 export default class Client {
@@ -45,6 +46,9 @@ export default class Client {
 
     // Init the scene client
     this.scenes = new ScenesClient(this._url)
+
+    // Init the position groups client
+    this.positionGroups = new PositionGroupsClient(this._url);
   }
 
   // Ping method: used to check connection between the client and the API server
