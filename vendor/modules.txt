@@ -6,14 +6,14 @@ github.com/FZambia/sentinel
 github.com/Scalingo/go-handlers
 # github.com/Scalingo/go-utils/errors v1.0.0
 github.com/Scalingo/go-utils/errors
-# github.com/Scalingo/go-utils/logger v1.0.0
+# github.com/Scalingo/go-utils/logger v1.1.0
 github.com/Scalingo/go-utils/logger
 # github.com/Scalingo/go-utils/mongo v1.1.0
 github.com/Scalingo/go-utils/mongo
 github.com/Scalingo/go-utils/mongo/document
 # github.com/a-contre-plongee/hs50 v0.0.0-20200105112617-318a81dc8a72
 github.com/a-contre-plongee/hs50/client
-# github.com/a-contre-plongee/hyperdeck v0.0.0-20201028162927-ce69c773381e
+# github.com/a-contre-plongee/hyperdeck v0.0.1
 github.com/a-contre-plongee/hyperdeck
 # github.com/asticode/go-astikit v0.20.0
 github.com/asticode/go-astikit
@@ -60,7 +60,7 @@ github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/gomodule/redigo v1.8.2
 github.com/gomodule/redigo/redis
-# github.com/google/uuid v1.1.2
+# github.com/google/uuid v1.3.0
 github.com/google/uuid
 # github.com/gorilla/context v1.1.1
 github.com/gorilla/context

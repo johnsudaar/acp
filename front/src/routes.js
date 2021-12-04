@@ -23,7 +23,7 @@ const routes = [
   { path: '/ccu', component: CCU },
   { path: '/cam/control', component: CamControl },
   { path: '/rec/control', component: RecControl },
-  { path: '/cockpit', component: Cockpit },
+  { path: '/cockpit', component: Cockpit, meta: { doubleMenu: true }},
   { path: '/scenes', component: Scenes },
   { path: '/scenes/_active', component: SceneActive, name: 'scene_active', meta: {fullscreen: true}},
   { path: '/scenes/:id', component: SceneEdit, name: 'scene_edit'},

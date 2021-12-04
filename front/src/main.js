@@ -112,6 +112,13 @@ Vue.component('scene-elem-form', SceneElemForm)
 Vue.component('scene-view', SceneView)
 Vue.component('chat-widget', ChatWidget)
 
+// Position Groups
+
+import PositionGroupsAdd from './components/PositionGroups/Add'
+import PositionGroupsDestroy from './components/PositionGroups/Destroy.vue'
+Vue.component('position-groups-add', PositionGroupsAdd)
+Vue.component('position-groups-destroy', PositionGroupsDestroy)
+
 // Form validation
 import VeeValidate from 'vee-validate'
 Vue.use(VeeValidate)

@@ -10,6 +10,7 @@ import {PtzPositionEditBus} from '@/buses'
 export default {
   props: {
     device: Object,
+    positionGroups: Array,
   },
   data() {
     return {
@@ -18,7 +19,18 @@ export default {
   },
   computed: {
     positions() {
-      return this.$store.getters['ptzpositions/forDevice'](this.device.id)
+      let positions = this.$store.getters['ptzpositions/forDevice'](this.device.id);
+      if(!positions) {
+        return positions;
+      }
+
+      return positions.filter((position) => {
+        let group = position.position_group_id;
+        if(group === "" || group === null) {
+          group = "*"
+        }
+        return this.positionGroups.includes(group);
+      })
     }
   },
   mounted() {
