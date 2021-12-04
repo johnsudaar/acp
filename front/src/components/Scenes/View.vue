@@ -7,7 +7,7 @@
       :class="elem.type"
       >
       <auto-text :size=256 :minSize="1" :text="elem.text" v-if="elem.type == 'text'" class="auto-text"/>
-      <seven-seg color="red" :text="$store.getters['timers/timerValue'](elem.timer_id)" v-if="elem.type == 'timer'"/>
+        <seven-seg :color="elem.color" :text="$store.getters['timers/timerValue'](elem.timer_id)" v-if="elem.type == 'timer'"/>
       <chat-widget :elem="elem" v-if="elem.type == 'chat'"/>
     </div>
   </div>

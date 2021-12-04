@@ -94,6 +94,12 @@
           item-value="id"
           label="Timer"/>
       </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="elem.color"
+          label="Color"
+          />
+      </v-col>
     </v-row>
     <v-row
       v-if="elem.type == 'chat'">
@@ -130,7 +136,7 @@ export default {
         {name: "Text", value: "text"},
         {name: "Timer", value: "timer"},
         {name: "Chat", value: "chat"},
-      ]
+      ],
     }
   },
   computed: {
