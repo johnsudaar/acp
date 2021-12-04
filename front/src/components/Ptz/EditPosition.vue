@@ -13,7 +13,7 @@
       </v-card-title>
       <v-card-text>
         <v-flex xs12 d-flex>
-          <v-select :items="positions" label="Position to edit" item-text="name" item-value="id" @change="onPosChanged"/>
+          <v-select :items="positions" label="Position to edit" item-text="name" item-value="id" @change="onPosChanged" @click="checkChanges"/>
         </v-flex>
         <ptz-form v-if="pos" @changed="onChanged" :device="device" :pos="pos" :disabled="!open"/>
       </v-card-text>
@@ -21,7 +21,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="red darken-1" text @click="close()">Close</v-btn>
-        <v-btn color="green darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit()">Save</v-btn>
+        <v-btn color="green darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit(false)">Save</v-btn>
+        <v-btn color="green darken-1" text v-bind:disabled="submitDisabled" v-bind:loading="loading" @click="submit(true)">Save and close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -50,6 +51,8 @@ export default {
   data () {
     return {
       loading: false,
+      alertAcked: false,
+      changed: false,
       params: {},
       posId: null,
     }
@@ -62,17 +65,29 @@ export default {
       return this.$store.getters['ptzpositions/forDevice'](this.device.id)
     },
     submitDisabled() {
-      return this.loading
+      return this.loading || !this.changed;
     }
   },
   methods: {
-    onPosChanged(id) {
+    async onPosChanged(id) {
       this.posId = id
+      await this.$nextTick()
+      this.changed = false;
+      this.alertAcked = false;
     },
     onChanged(params) {
+      this.changed = true
       this.params = params
     },
-    async submit() {
+    checkChanges(event) {
+      if(this.changed && !this.alertAcked) {
+        this.alertAcked = true;
+        if(window.confirm("Do you want to save before switching position?")) {
+          this.submit(false);
+        }
+      }
+    },
+    async submit(close) {
       var response
       try {
         response = await this.$store.state.config.apiClient.ptz.updatePosition(this.device.id, this.pos.id, this.params)
@@ -84,7 +99,12 @@ export default {
         cam: this.device.id,
         position: response,
       })
-      this.close()
+      await this.$nextTick()
+      this.changed = false;
+      this.alertAcked = false;
+      if(close) {
+        this.close()
+      }
     },
     close() {
       this.posId = null
